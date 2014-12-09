@@ -10,12 +10,19 @@
 
 @interface HairDetailViewController ()
 
+@property (nonatomic,strong) UIButton *cameraBtn;
+
 @end
 
 @implementation HairDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.cameraBtn setTitle:@"拍照" forState:UIControlStateNormal];
+    [self.cameraBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -33,5 +40,11 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - method
+- (void)enterCamera
+{
+    
+}
 
 @end
