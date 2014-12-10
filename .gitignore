@@ -6,3 +6,5 @@ Build/Products/Hair/Index/Debug/iphoneos8.1-arm64/Hair.xcindex/db.xcindexdb-wal
 Build/Products/Hair/Logs
 Build/Products/Hair/scm.plist
 Build/Products/ModuleCache
+.DS_Store
+xcshareddata
