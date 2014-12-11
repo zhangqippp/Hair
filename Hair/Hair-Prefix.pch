@@ -1,0 +1,27 @@
+//
+//  Hair-Prefix.pch
+//  Hair
+//
+//  Created by yewei on 14/12/11.
+//  Copyright (c) 2014年 zhphy. All rights reserved.
+//
+
+#ifndef Hair_Hair_Prefix_pch
+#define Hair_Hair_Prefix_pch
+
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import "BaseNetworkEngine.h"
+    #import "YQGlobalHelper.h"
+    #import "YQMessageHelper.h"
+#endif
+
+#ifdef DEBUG
+#   define NSLog(fmt, ...) NSLog((@"%s " fmt), __PRETTY_FUNCTION__, ##__VA_ARGS__);
+#else
+#   define NSLog(...)
+#endif
+
+#endif
