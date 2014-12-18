@@ -8,3 +8,6 @@ Build/Products/Hair/scm.plist
 Build/Products/ModuleCache
 .DS_Store
 xcshareddata
+Build/Products/Hair/Index
+Build/Products/Hair/TextIndex
+Build
