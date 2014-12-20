@@ -37,22 +37,8 @@
     
     [self.photoView addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
     
-//    self.originImage = [UIImage imageNamed:@"111"];
-    self.photoView.image = [UIImage imageNamed:@"111"];
-    
-    
-    
-//    CIImage *image = self.originImage.CIImage;
-//    CIContext *detectContext = [CIContext contextWithOptions:nil];                    // 1
-//    NSDictionary *opts = @{ CIDetectorAccuracy : CIDetectorAccuracyHigh };      // 2
-//    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace
-//                                              context:detectContext
-//                                              options:opts];                    // 3
-//    opts = @{ CIDetectorImageOrientation : [[image properties] valueForKey:kCGImagePropertyOrientation] }; // 4
-//    NSArray *features = [detector featuresInImage:image options:opts];        // 5
-    
-//    NSLog(@"features:%@",features);
-
+    UIImage *img = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"123" ofType:@"jpg"]];
+    self.originImage = img;
     
     // Do any additional setup after loading the view.
 }
@@ -77,6 +63,17 @@
 }
 */
 
+#pragma mark - setter
+- (void)setOriginImage:(UIImage *)originImage
+{
+    _originImage = originImage;
+    if (originImage) {
+        self.photoView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.width*self.originImage.size.height/self.originImage.size.width);
+        self.photoView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
+        self.photoView.image = self.originImage;
+    }
+}
+
 #pragma mark - method
 - (void)enterCamera
 {
@@ -98,7 +95,6 @@
     if ([info[UIImagePickerControllerMediaType] isEqualToString:(NSString *)kUTTypeImage]) {
         UIImage *originImage = info[UIImagePickerControllerOriginalImage];
         self.originImage = originImage;
-        self.photoView.image = originImage;
     }
 }
 
@@ -149,9 +145,30 @@
     NSArray *features = [faceDetector featuresInImage:[CIImage imageWithCGImage:self.originImage.CGImage] options:@{CIDetectorImageOrientation:[NSNumber numberWithInt:exifOrientation]}];
 
     NSLog(@"features:%@",features);
+    for (UIImageView *img in self.photoView.subviews) {
+        [img removeFromSuperview];
+    }
     for (CIFaceFeature *feature in features) {
         NSLog(@"face bounds:%f,%f,%f,%f",feature.bounds.origin.x,feature.bounds.origin.y,feature.bounds.size.width,feature.bounds.size.height);
+        UIImageView *faceView = [[UIImageView alloc] init];
+        CGRect rect = feature.bounds;
+        rect.origin.x *= self.photoView.frame.size.width/self.originImage.size.width;
+        rect.origin.y *= self.photoView.frame.size.width/self.originImage.size.width;
+        rect.size.width *= self.photoView.frame.size.width/self.originImage.size.width;
+        rect.size.height *= self.photoView.frame.size.width/self.originImage.size.width;
+        float a = rect.origin.x;
+        rect.origin.x = rect.origin.y;
+        rect.origin.y = a;
+        faceView.frame = rect;
+//        CGPoint center = faceView.center;
+//        center.y = self.photoView.frame.size.height - center.y;
+//        faceView.center = center;
+        faceView.backgroundColor = [UIColor clearColor];
+        faceView.layer.borderColor = [[UIColor redColor] CGColor];
+        faceView.layer.borderWidth = 1;
+        [self.photoView addSubview:faceView];
     }
+//    self.photoView.transform = CGAffineTransformMakeScale(0.5, 0.5);
 }
 
 @end
