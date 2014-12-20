@@ -37,8 +37,8 @@
     
     [self.photoView addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
     
-//    UIImage *img = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"123" ofType:@"jpg"]];
-//    self.originImage = img;
+    UIImage *img = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"123" ofType:@"jpg"]];
+    self.originImage = img;
     
     // Do any additional setup after loading the view.
 }
@@ -163,6 +163,11 @@
 //        CGPoint center = faceView.center;
 //        center.y = self.photoView.frame.size.height - center.y;
 //        faceView.center = center;
+        CGPoint center = faceView.center;
+        float m = center.x;
+        center.x = center.y;
+        center.y = m;
+        faceView.center = center;
         faceView.backgroundColor = [UIColor clearColor];
         faceView.layer.borderColor = [[UIColor redColor] CGColor];
         faceView.layer.borderWidth = 1;
@@ -173,10 +178,27 @@
         hairView.center = CGPointMake(faceView.center.x+15, faceView.center.y+75);
         hairView.layer.borderColor = [[UIColor blueColor] CGColor];
         hairView.layer.borderWidth = 1;
-        hairView.image = [UIImage imageNamed:@"h03"];
         [self.photoView addSubview:hairView];
+        
+//        for (int i=1; i<10; i++) {
+//            hairView.image = [UIImage imageNamed:[NSString stringWithFormat:@"h0%d",i]];
+//            UIGraphicsBeginImageContext(self.photoView.frame.size);
+//            [self.photoView.layer renderInContext:UIGraphicsGetCurrentContext()];
+//            UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+//            UIGraphicsEndImageContext();
+//            NSData *imageData = UIImageJPEGRepresentation(image, 1);
+//            [imageData writeToFile:[NSString stringWithFormat:@"/Users/qizhang/Desktop/me/%d.jpg",i] atomically:YES];
+//        }
+//        for (int i=10; i<33; i++) {
+//            hairView.image = [UIImage imageNamed:[NSString stringWithFormat:@"h%d",i]];
+//            UIGraphicsBeginImageContext(self.photoView.frame.size);
+//            [self.photoView.layer renderInContext:UIGraphicsGetCurrentContext()];
+//            UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+//            UIGraphicsEndImageContext();
+//            NSData *imageData = UIImageJPEGRepresentation(image, 1);
+//            [imageData writeToFile:[NSString stringWithFormat:@"/Users/qizhang/Desktop/me/%d.jpg",i] atomically:YES];
+//        }
     }
-//    self.photoView.transform = CGAffineTransformMakeScale(0.5, 0.5);
 }
 
 @end
