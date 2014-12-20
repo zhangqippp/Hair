@@ -390,7 +390,7 @@
 #pragma mark - Private Methods
 - (NSString *)absoluteUrlString:(NSString *)relativeUrlPath
 {
-    NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@://%@", NO ? @"https" : @"http", self.readonlyHostName];
+    NSMutableString *urlString = [NSMutableString stringWithFormat:@"http://%@", self.readonlyHostName];
     
     if(self.portNumber != 0)
         [urlString appendFormat:@":%d", self.portNumber];

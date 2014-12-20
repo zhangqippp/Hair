@@ -7,9 +7,12 @@
 //
 
 #import "ViewController.h"
+#import "PhotoViewCell.h"
 #import "HairDetailViewController.h"
 
-@interface ViewController ()
+@interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+
+@property (nonatomic, strong) UICollectionView *collectionView;
 
 @end
 
@@ -17,14 +20,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    [self.navigationItem setTitle:@"Hair"];
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(100, 100, 100, 100);
-    btn.backgroundColor = [UIColor grayColor];
-    [btn addTarget:self action:@selector(enterHairDetail) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
-    
-    // Do any additional setup after loading the view, typically from a nib.
+    [self.view addSubview:self.collectionView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,11 +30,57 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - method
-- (void)enterHairDetail
+#pragma mark -- Getter
+- (UICollectionView *)collectionView
 {
+    if (!_collectionView) {
+        UICollectionViewFlowLayout *layout= [[UICollectionViewFlowLayout alloc]init];
+        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height) collectionViewLayout:layout];
+        [self.collectionView registerClass:[PhotoViewCell class]
+                forCellWithReuseIdentifier:@"Cell"];
+        self.collectionView.backgroundColor = [UIColor whiteColor];
+        self.collectionView.delegate = self;
+        self.collectionView.dataSource = self;
+    }
+    return _collectionView;
+}
+
+#pragma mark -- UICollectionViewDataSource
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 90;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identify = @"Cell";
+    PhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identify forIndexPath:indexPath];
+    cell.photoImg.image = [UIImage imageNamed:@"5.jpg"];
+    return cell;
+}
+
+#pragma mark --UICollectionViewDelegateFlowLayout
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    UIEdgeInsets top = {10,10,10,10};
+    return top;
+}
+
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return CGSizeMake((self.view.width - 40)/3,300);
+}
+
+#pragma mark --UICollectionViewDelegate
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     HairDetailViewController *detail = [[HairDetailViewController alloc] init];
     [self.navigationController pushViewController:detail animated:YES];
 }
+
 
 @end

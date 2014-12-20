@@ -37,8 +37,8 @@
     
     [self.photoView addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
     
-    UIImage *img = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"123" ofType:@"jpg"]];
-    self.originImage = img;
+//    UIImage *img = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"123" ofType:@"jpg"]];
+//    self.originImage = img;
     
     // Do any additional setup after loading the view.
 }
@@ -167,6 +167,14 @@
         faceView.layer.borderColor = [[UIColor redColor] CGColor];
         faceView.layer.borderWidth = 1;
         [self.photoView addSubview:faceView];
+        CGRect frame = CGRectMake(0, 0, 480*rect.size.width/240, (480*rect.size.width/240)*800/480);
+        UIImageView *hairView = [[UIImageView alloc] init];
+        hairView.frame = frame;
+        hairView.center = CGPointMake(faceView.center.x+15, faceView.center.y+75);
+        hairView.layer.borderColor = [[UIColor blueColor] CGColor];
+        hairView.layer.borderWidth = 1;
+        hairView.image = [UIImage imageNamed:@"h03"];
+        [self.photoView addSubview:hairView];
     }
 //    self.photoView.transform = CGAffineTransformMakeScale(0.5, 0.5);
 }

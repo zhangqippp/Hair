@@ -16,6 +16,7 @@
     #import "BaseNetworkEngine.h"
     #import "YQGlobalHelper.h"
     #import "YQMessageHelper.h"
+    #import "UIViewAdditions.h"
 #endif
 
 #ifdef DEBUG
