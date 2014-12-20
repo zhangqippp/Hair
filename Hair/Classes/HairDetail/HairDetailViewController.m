@@ -16,6 +16,8 @@
 @property (nonatomic,strong) UIImageView *photoView;
 @property (nonatomic,strong) UIImage *originImage;
 
+@property (nonatomic,strong) UIImageView *detailPhotoImg;
+
 @end
 
 @implementation HairDetailViewController
@@ -37,6 +39,10 @@
     
     [self.photoView addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
     
+    
+    self.detailPhotoImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
+    self.detailPhotoImg.image = [UIImage imageNamed:@"5.jpg"];
+    [self.view addSubview:self.detailPhotoImg];
 //    UIImage *img = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"123" ofType:@"jpg"]];
 //    self.originImage = img;
     
