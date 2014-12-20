@@ -7,12 +7,19 @@
 //
 
 #import "ViewController.h"
+#import "MJRefresh.h"
 #import "PhotoViewCell.h"
 #import "HairDetailViewController.h"
 
-@interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+@interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,MJRefreshBaseViewDelegate>
+{
+    MJRefreshHeaderView *_header;
+    MJRefreshFooterView *_footer;
+}
 
 @property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) NSMutableArray *photoArray;
+@property (nonatomic, assign) NSInteger count;
 
 @end
 
@@ -20,14 +27,80 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self.navigationItem setTitle:@"Hair"];
+    [self.navigationItem setTitle:@"Hair"];
     
     [self.view addSubview:self.collectionView];
+    
+    //下拉刷新
+    MJRefreshHeaderView *header = [MJRefreshHeaderView header];
+    header.scrollView = self.collectionView;
+    header.delegate = self;
+
+    [header beginRefreshing];
+    _header = header;
+    
+    //下拉刷新
+    MJRefreshFooterView *footer = [MJRefreshFooterView footer];
+    footer.scrollView = self.collectionView;
+    footer.delegate = self;
+    _footer = footer;
+}
+
+- (void)dealloc
+{
+    [_header free];
+    [_footer free];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)doneWithView:(MJRefreshBaseView *)refreshView
+{
+    // 刷新表格
+    [self.collectionView reloadData];
+    
+    // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+    [refreshView endRefreshing];
+}
+
+#pragma mark - 刷新控件的代理方法
+#pragma mark 开始进入刷新状态
+- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
+{
+    NSLog(@"%@----开始进入刷新状态", refreshView.class);
+    
+    _count = _count+12;
+    // 2.2秒后刷新表格UI
+    [self performSelector:@selector(doneWithView:) withObject:refreshView afterDelay:2.0];
+}
+
+#pragma mark 刷新完毕
+- (void)refreshViewEndRefreshing:(MJRefreshBaseView *)refreshView
+{
+    NSLog(@"%@----刷新完毕", refreshView.class);
+}
+
+#pragma mark 监听刷新状态的改变
+- (void)refreshView:(MJRefreshBaseView *)refreshView stateChange:(MJRefreshState)state
+{
+    switch (state) {
+        case MJRefreshStateNormal:
+            NSLog(@"%@----切换到：普通状态", refreshView.class);
+            break;
+            
+        case MJRefreshStatePulling:
+            NSLog(@"%@----切换到：松开即可刷新的状态", refreshView.class);
+            break;
+            
+        case MJRefreshStateRefreshing:
+            NSLog(@"%@----切换到：正在刷新状态", refreshView.class);
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark -- Getter
@@ -53,7 +126,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 90;
+    return _count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
