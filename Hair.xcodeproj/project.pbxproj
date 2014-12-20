@@ -60,6 +60,11 @@
 		4236E5451A39FA3300621B45 /* UIViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4236E5441A39FA3300621B45 /* UIViewAdditions.m */; };
 		4236E5491A39FD5700621B45 /* YQMessageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4236E5481A39FD5700621B45 /* YQMessageHelper.m */; };
 		4236E54C1A39FD7A00621B45 /* YQGlobalHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4236E54B1A39FD7A00621B45 /* YQGlobalHelper.m */; };
+		429EEDD81A45D79100E1E631 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 429EEDCE1A45D79100E1E631 /* MJRefresh.bundle */; };
+		429EEDD91A45D79100E1E631 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 429EEDD11A45D79100E1E631 /* MJRefreshBaseView.m */; };
+		429EEDDA1A45D79100E1E631 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 429EEDD31A45D79100E1E631 /* MJRefreshConst.m */; };
+		429EEDDB1A45D79100E1E631 /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 429EEDD51A45D79100E1E631 /* MJRefreshFooterView.m */; };
+		429EEDDC1A45D79100E1E631 /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 429EEDD71A45D79100E1E631 /* MJRefreshHeaderView.m */; };
 		6D46881D1A441B3E005942C9 /* h01.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D4687FD1A441B3E005942C9 /* h01.png */; };
 		6D46881E1A441B3E005942C9 /* h02.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D4687FE1A441B3E005942C9 /* h02.png */; };
 		6D46881F1A441B3E005942C9 /* h03.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D4687FF1A441B3E005942C9 /* h03.png */; };
@@ -192,6 +197,16 @@
 		4236E5481A39FD5700621B45 /* YQMessageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQMessageHelper.m; sourceTree = "<group>"; };
 		4236E54A1A39FD7A00621B45 /* YQGlobalHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQGlobalHelper.h; sourceTree = "<group>"; };
 		4236E54B1A39FD7A00621B45 /* YQGlobalHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQGlobalHelper.m; sourceTree = "<group>"; };
+		429EEDCE1A45D79100E1E631 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
+		429EEDCF1A45D79100E1E631 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
+		429EEDD01A45D79100E1E631 /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
+		429EEDD11A45D79100E1E631 /* MJRefreshBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBaseView.m; sourceTree = "<group>"; };
+		429EEDD21A45D79100E1E631 /* MJRefreshConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshConst.h; sourceTree = "<group>"; };
+		429EEDD31A45D79100E1E631 /* MJRefreshConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshConst.m; sourceTree = "<group>"; };
+		429EEDD41A45D79100E1E631 /* MJRefreshFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooterView.h; sourceTree = "<group>"; };
+		429EEDD51A45D79100E1E631 /* MJRefreshFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshFooterView.m; sourceTree = "<group>"; };
+		429EEDD61A45D79100E1E631 /* MJRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshHeaderView.h; sourceTree = "<group>"; };
+		429EEDD71A45D79100E1E631 /* MJRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeaderView.m; sourceTree = "<group>"; };
 		6D4687FD1A441B3E005942C9 /* h01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = h01.png; sourceTree = "<group>"; };
 		6D4687FE1A441B3E005942C9 /* h02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = h02.png; sourceTree = "<group>"; };
 		6D4687FF1A441B3E005942C9 /* h03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = h03.png; sourceTree = "<group>"; };
@@ -300,6 +315,7 @@
 		4236E4BE1A39F49200621B45 /* Thirdpart */ = {
 			isa = PBXGroup;
 			children = (
+				429EEDCD1A45D79100E1E631 /* MJRefresh */,
 				4236E4C21A39F71200621B45 /* BlockAlertComponent */,
 				4236E4E71A39F71200621B45 /* MBProgressHUD */,
 				4236E4EC1A39F71200621B45 /* MKNetworkKit */,
@@ -482,6 +498,23 @@
 				4236E5481A39FD5700621B45 /* YQMessageHelper.m */,
 			);
 			path = "Assistant&Helper";
+			sourceTree = "<group>";
+		};
+		429EEDCD1A45D79100E1E631 /* MJRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				429EEDCE1A45D79100E1E631 /* MJRefresh.bundle */,
+				429EEDCF1A45D79100E1E631 /* MJRefresh.h */,
+				429EEDD01A45D79100E1E631 /* MJRefreshBaseView.h */,
+				429EEDD11A45D79100E1E631 /* MJRefreshBaseView.m */,
+				429EEDD21A45D79100E1E631 /* MJRefreshConst.h */,
+				429EEDD31A45D79100E1E631 /* MJRefreshConst.m */,
+				429EEDD41A45D79100E1E631 /* MJRefreshFooterView.h */,
+				429EEDD51A45D79100E1E631 /* MJRefreshFooterView.m */,
+				429EEDD61A45D79100E1E631 /* MJRefreshHeaderView.h */,
+				429EEDD71A45D79100E1E631 /* MJRefreshHeaderView.m */,
+			);
+			path = MJRefresh;
 			sourceTree = "<group>";
 		};
 		6D4687FC1A441B3E005942C9 /* hair_style */ = {
@@ -722,6 +755,7 @@
 				4236E50F1A39F71200621B45 /* action-red-button-selected.png in Resources */,
 				6D4688201A441B3E005942C9 /* h04.png in Resources */,
 				4236E5191A39F71200621B45 /* alert-red-button.png in Resources */,
+				429EEDD81A45D79100E1E631 /* MJRefresh.bundle in Resources */,
 				6D4688331A441B3E005942C9 /* h23.png in Resources */,
 				6D4688241A441B3E005942C9 /* h08.png in Resources */,
 				6D46883C1A441B3E005942C9 /* h32.png in Resources */,
@@ -777,10 +811,13 @@
 				4236E5271A39F71200621B45 /* NSDate+RFC1123.m in Sources */,
 				4236E5291A39F71200621B45 /* NSString+MKNetworkKitAdditions.m in Sources */,
 				6D7A0CE51A34B4C400B7E6D1 /* AppDelegate.m in Sources */,
+				429EEDDA1A45D79100E1E631 /* MJRefreshConst.m in Sources */,
 				6D7A0CE21A34B4C400B7E6D1 /* main.m in Sources */,
+				429EEDD91A45D79100E1E631 /* MJRefreshBaseView.m in Sources */,
 				4236E4BF1A39F49200621B45 /* BaseNetworkEngine.m in Sources */,
 				4236E5231A39F71200621B45 /* MBProgressHUD+Add.m in Sources */,
 				4236E5211A39F71200621B45 /* BlockAlertView.m in Sources */,
+				429EEDDC1A45D79100E1E631 /* MJRefreshHeaderView.m in Sources */,
 				4236E52D1A39F71200621B45 /* MKNetworkOperation.m in Sources */,
 				6DE30DD81A457866005FC6EE /* PhotoViewCell.m in Sources */,
 				6D7A0D0E1A34B62600B7E6D1 /* HairDetailViewController.m in Sources */,
@@ -790,6 +827,7 @@
 				4236E54C1A39FD7A00621B45 /* YQGlobalHelper.m in Sources */,
 				4236E5451A39FA3300621B45 /* UIViewAdditions.m in Sources */,
 				4236E5241A39F71200621B45 /* MBProgressHUD.m in Sources */,
+				429EEDDB1A45D79100E1E631 /* MJRefreshFooterView.m in Sources */,
 				4236E5491A39FD5700621B45 /* YQMessageHelper.m in Sources */,
 				4236E4C01A39F49200621B45 /* NetService.m in Sources */,
 				4236E5221A39F71200621B45 /* BlockBackground.m in Sources */,
