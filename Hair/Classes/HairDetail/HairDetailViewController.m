@@ -10,9 +10,13 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <ImageIO/ImageIO.h>
 
-@interface HairDetailViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+#define Detail_Alert_Save_Tag 101
+
+@interface HairDetailViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAlertViewDelegate>
 
 @property (nonatomic,strong) UIButton *cameraBtn;
+@property (nonatomic,strong) UIButton *editBtn;
+@property (nonatomic,strong) UIButton *saveBtn;
 @property (nonatomic,strong) UIImageView *photoView;
 @property (nonatomic,strong) UIImage *originImage;
 
@@ -34,11 +38,23 @@
     self.photoView.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
     self.photoView.backgroundColor = [UIColor grayColor];
     [self.view addSubview:self.photoView];
-    
     [self.photoView addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
     
-    UIImage *img = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"123" ofType:@"jpg"]];
-    self.originImage = img;
+    self.saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.saveBtn setTitle:@"保存" forState:UIControlStateNormal];
+    [self.saveBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [self.saveBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    self.saveBtn.backgroundColor = [UIColor whiteColor];
+    self.saveBtn.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.saveBtn addTarget:self action:@selector(saveAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.saveBtn];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.saveBtn attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:-20]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.saveBtn attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:-20]];
+    [self.saveBtn addConstraint:[NSLayoutConstraint constraintWithItem:self.saveBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:60]];
+    [self.saveBtn addConstraint:[NSLayoutConstraint constraintWithItem:self.saveBtn attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:40]];
+    
+//    UIImage *img = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"123" ofType:@"jpg"]];
+//    self.originImage = img;
     
     // Do any additional setup after loading the view.
 }
@@ -85,6 +101,13 @@
     [self presentViewController:picker animated:YES completion:^{
         
     }];
+}
+
+- (void)saveAction:(id)sender
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"是否要将头像保存至照片库？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.tag = Detail_Alert_Save_Tag;
+    [alert show];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -163,11 +186,12 @@
 //        CGPoint center = faceView.center;
 //        center.y = self.photoView.frame.size.height - center.y;
 //        faceView.center = center;
-        CGPoint center = faceView.center;
-        float m = center.x;
-        center.x = center.y;
-        center.y = m;
-        faceView.center = center;
+        
+//        CGPoint center = faceView.center;
+//        float m = center.x;
+//        center.x = center.y;
+//        center.y = m;
+//        faceView.center = center;
         faceView.backgroundColor = [UIColor clearColor];
         faceView.layer.borderColor = [[UIColor redColor] CGColor];
         faceView.layer.borderWidth = 1;
@@ -178,6 +202,7 @@
         hairView.center = CGPointMake(faceView.center.x+15, faceView.center.y+75);
         hairView.layer.borderColor = [[UIColor blueColor] CGColor];
         hairView.layer.borderWidth = 1;
+        hairView.image = [UIImage imageNamed:@"h02"];
         [self.photoView addSubview:hairView];
         
 //        for (int i=1; i<10; i++) {
@@ -198,6 +223,18 @@
 //            NSData *imageData = UIImageJPEGRepresentation(image, 1);
 //            [imageData writeToFile:[NSString stringWithFormat:@"/Users/qizhang/Desktop/me/%d.jpg",i] atomically:YES];
 //        }
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == Detail_Alert_Save_Tag && buttonIndex == 1) {
+        UIGraphicsBeginImageContext(self.photoView.frame.size);
+        [self.photoView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
     }
 }
 
