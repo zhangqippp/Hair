@@ -60,6 +60,7 @@
 		4236E5451A39FA3300621B45 /* UIViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4236E5441A39FA3300621B45 /* UIViewAdditions.m */; };
 		4236E5491A39FD5700621B45 /* YQMessageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4236E5481A39FD5700621B45 /* YQMessageHelper.m */; };
 		4236E54C1A39FD7A00621B45 /* YQGlobalHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4236E54B1A39FD7A00621B45 /* YQGlobalHelper.m */; };
+		427425641A4490EF009BB684 /* PhotoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 427425631A4490EF009BB684 /* PhotoViewCell.m */; };
 		6D7A0CE21A34B4C400B7E6D1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A0CE11A34B4C400B7E6D1 /* main.m */; };
 		6D7A0CE51A34B4C400B7E6D1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A0CE41A34B4C400B7E6D1 /* AppDelegate.m */; };
 		6D7A0CE81A34B4C400B7E6D1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A0CE71A34B4C400B7E6D1 /* ViewController.m */; };
@@ -157,6 +158,8 @@
 		4236E5481A39FD5700621B45 /* YQMessageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQMessageHelper.m; sourceTree = "<group>"; };
 		4236E54A1A39FD7A00621B45 /* YQGlobalHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQGlobalHelper.h; sourceTree = "<group>"; };
 		4236E54B1A39FD7A00621B45 /* YQGlobalHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQGlobalHelper.m; sourceTree = "<group>"; };
+		427425621A4490EF009BB684 /* PhotoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewCell.h; sourceTree = "<group>"; };
+		427425631A4490EF009BB684 /* PhotoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewCell.m; sourceTree = "<group>"; };
 		6D7A0CDC1A34B4C400B7E6D1 /* Hair.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hair.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D7A0CE01A34B4C400B7E6D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D7A0CE11A34B4C400B7E6D1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -439,6 +442,8 @@
 				6D7A0CE41A34B4C400B7E6D1 /* AppDelegate.m */,
 				6D7A0CE61A34B4C400B7E6D1 /* ViewController.h */,
 				6D7A0CE71A34B4C400B7E6D1 /* ViewController.m */,
+				427425621A4490EF009BB684 /* PhotoViewCell.h */,
+				427425631A4490EF009BB684 /* PhotoViewCell.m */,
 				6D7A0CE91A34B4C400B7E6D1 /* Main.storyboard */,
 				4236E5461A39FD2F00621B45 /* Assistant&Helper */,
 				4236E5421A39F9ED00621B45 /* Categorys */,
@@ -633,6 +638,7 @@
 				4236E5231A39F71200621B45 /* MBProgressHUD+Add.m in Sources */,
 				4236E5211A39F71200621B45 /* BlockAlertView.m in Sources */,
 				4236E52D1A39F71200621B45 /* MKNetworkOperation.m in Sources */,
+				427425641A4490EF009BB684 /* PhotoViewCell.m in Sources */,
 				6D7A0D0E1A34B62600B7E6D1 /* HairDetailViewController.m in Sources */,
 				4236E5251A39F71200621B45 /* NSAlert+MKNetworkKitAdditions.m in Sources */,
 				4236E52F1A39F71200621B45 /* Toast+UIView.m in Sources */,
