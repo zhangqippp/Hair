@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *photoArray;
+@property (nonatomic, assign) NSInteger count;
 
 @end
 
@@ -47,7 +48,6 @@
 
 - (void)dealloc
 {
-    NSLog(@"MJCollectionViewController--dealloc---");
     [_header free];
     [_footer free];
 }
@@ -72,17 +72,7 @@
 {
     NSLog(@"%@----开始进入刷新状态", refreshView.class);
     
-//    // 1.添加假数据
-//    for (int i = 0; i<5; i++) {
-//        UIColor *color = [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:1];
-//        
-//        if ([refreshView isKindOfClass:[MJRefreshHeaderView class]]) {
-//            [_fakeColor insertObject:color atIndex:0];
-//        } else {
-//            [_fakeColor addObject:color];
-//        }
-//    }
-    
+    _count = _count+12;
     // 2.2秒后刷新表格UI
     [self performSelector:@selector(doneWithView:) withObject:refreshView afterDelay:2.0];
 }
@@ -136,7 +126,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 12;
+    return _count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
