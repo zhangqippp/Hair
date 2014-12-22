@@ -107,6 +107,7 @@
 		6D7A0CF01A34B4C400B7E6D1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D7A0CEE1A34B4C400B7E6D1 /* LaunchScreen.xib */; };
 		6D7A0CFC1A34B4C400B7E6D1 /* HairTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A0CFB1A34B4C400B7E6D1 /* HairTests.m */; };
 		6D7A0D0E1A34B62600B7E6D1 /* HairDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A0D0D1A34B62600B7E6D1 /* HairDetailViewController.m */; };
+		6DBC97211A47B1FE00AA46B8 /* HairDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DBC97201A47B1FE00AA46B8 /* HairDisplayView.m */; };
 		6DE30DD81A457866005FC6EE /* PhotoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DE30DD71A457866005FC6EE /* PhotoViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -256,6 +257,8 @@
 		6D7A0CFB1A34B4C400B7E6D1 /* HairTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HairTests.m; sourceTree = "<group>"; };
 		6D7A0D0C1A34B62600B7E6D1 /* HairDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HairDetailViewController.h; sourceTree = "<group>"; };
 		6D7A0D0D1A34B62600B7E6D1 /* HairDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HairDetailViewController.m; sourceTree = "<group>"; };
+		6DBC971F1A47B1FE00AA46B8 /* HairDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HairDisplayView.h; sourceTree = "<group>"; };
+		6DBC97201A47B1FE00AA46B8 /* HairDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HairDisplayView.m; sourceTree = "<group>"; };
 		6DE30DD61A457866005FC6EE /* PhotoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewCell.h; sourceTree = "<group>"; };
 		6DE30DD71A457866005FC6EE /* PhotoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -638,10 +641,20 @@
 		6D7A0D0B1A34B61400B7E6D1 /* HairDetail */ = {
 			isa = PBXGroup;
 			children = (
+				6DBC971E1A47B1D000AA46B8 /* views */,
 				6D7A0D0C1A34B62600B7E6D1 /* HairDetailViewController.h */,
 				6D7A0D0D1A34B62600B7E6D1 /* HairDetailViewController.m */,
 			);
 			path = HairDetail;
+			sourceTree = "<group>";
+		};
+		6DBC971E1A47B1D000AA46B8 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				6DBC971F1A47B1FE00AA46B8 /* HairDisplayView.h */,
+				6DBC97201A47B1FE00AA46B8 /* HairDisplayView.m */,
+			);
+			path = views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -825,6 +838,7 @@
 				4236E52F1A39F71200621B45 /* Toast+UIView.m in Sources */,
 				4236E52A1A39F71200621B45 /* UIAlertView+MKNetworkKitAdditions.m in Sources */,
 				4236E54C1A39FD7A00621B45 /* YQGlobalHelper.m in Sources */,
+				6DBC97211A47B1FE00AA46B8 /* HairDisplayView.m in Sources */,
 				4236E5451A39FA3300621B45 /* UIViewAdditions.m in Sources */,
 				4236E5241A39F71200621B45 /* MBProgressHUD.m in Sources */,
 				429EEDDB1A45D79100E1E631 /* MJRefreshFooterView.m in Sources */,

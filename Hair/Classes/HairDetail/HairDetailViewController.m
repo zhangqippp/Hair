@@ -9,6 +9,7 @@
 #import "HairDetailViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <ImageIO/ImageIO.h>
+#import "HairDisplayView.h"
 
 #define Detail_Alert_Save_Tag 101
 
@@ -19,6 +20,7 @@
 @property (nonatomic,strong) UIButton *saveBtn;
 @property (nonatomic,strong) UIImageView *photoView;
 @property (nonatomic,strong) UIImage *originImage;
+@property (nonatomic,strong) HairDisplayView *hairView;
 
 @end
 
@@ -37,6 +39,7 @@
     self.photoView = [[UIImageView alloc] init];
     self.photoView.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
     self.photoView.backgroundColor = [UIColor grayColor];
+    self.photoView.userInteractionEnabled = YES;
     [self.view addSubview:self.photoView];
     [self.photoView addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
     
@@ -88,6 +91,15 @@
         self.photoView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
         self.photoView.image = self.originImage;
     }
+}
+
+#pragma mark - getter
+- (HairDisplayView *)hairView
+{
+    if (!_hairView) {
+        _hairView = [[HairDisplayView alloc] init];
+    }
+    return _hairView;
 }
 
 #pragma mark - method
@@ -183,6 +195,7 @@
         rect.origin.x = rect.origin.y;
         rect.origin.y = a;
         faceView.frame = rect;
+        
 //        CGPoint center = faceView.center;
 //        center.y = self.photoView.frame.size.height - center.y;
 //        faceView.center = center;
@@ -192,18 +205,18 @@
 //        center.x = center.y;
 //        center.y = m;
 //        faceView.center = center;
+        
         faceView.backgroundColor = [UIColor clearColor];
-        faceView.layer.borderColor = [[UIColor redColor] CGColor];
-        faceView.layer.borderWidth = 1;
+//        faceView.layer.borderColor = [[UIColor redColor] CGColor];
+//        faceView.layer.borderWidth = 1;
         [self.photoView addSubview:faceView];
         CGRect frame = CGRectMake(0, 0, 480*rect.size.width/240, (480*rect.size.width/240)*800/480);
-        UIImageView *hairView = [[UIImageView alloc] init];
-        hairView.frame = frame;
-        hairView.center = CGPointMake(faceView.center.x+15, faceView.center.y+75);
-        hairView.layer.borderColor = [[UIColor blueColor] CGColor];
-        hairView.layer.borderWidth = 1;
-        hairView.image = [UIImage imageNamed:@"h02"];
-        [self.photoView addSubview:hairView];
+        self.hairView.frame = frame;
+        self.hairView.center = CGPointMake(faceView.center.x+15, faceView.center.y+75);
+//        self.hairView.layer.borderColor = [[UIColor blueColor] CGColor];
+//        self.hairView.layer.borderWidth = 1;
+        self.hairView.image = [UIImage imageNamed:@"h05"];
+        [self.photoView addSubview:self.hairView];
         
 //        for (int i=1; i<10; i++) {
 //            hairView.image = [UIImage imageNamed:[NSString stringWithFormat:@"h0%d",i]];
