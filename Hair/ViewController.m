@@ -27,7 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationItem setTitle:@"Hair"];
+    [self.navigationItem setTitle:@"美发博物馆"];
     
     [self.view addSubview:self.collectionView];
     
