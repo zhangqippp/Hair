@@ -158,7 +158,19 @@
 
 #pragma mark --UICollectionViewDelegate
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    HairDetailViewController *detail = [[HairDetailViewController alloc] init];
+    UIImage *hairImage = nil;
+    UIImage *styleImage = nil;
+    if (indexPath.row%3 == 0) {
+        hairImage = [UIImage imageNamed:@"hair1.jpg"];
+        styleImage = [UIImage imageNamed:@"style1"];
+    }else if (indexPath.row%3 == 1){
+        hairImage = [UIImage imageNamed:@"hair2.jpg"];
+        styleImage = [UIImage imageNamed:@"style2"];
+    }else if (indexPath.row%3 == 2){
+        hairImage = [UIImage imageNamed:@"hair3.jpg"];
+        styleImage = [UIImage imageNamed:@"style3"];
+    }
+    HairDetailViewController *detail = [[HairDetailViewController alloc] initWithDetailImage:hairImage andStyleImage:styleImage];
     [self.navigationController pushViewController:detail animated:YES];
 }
 

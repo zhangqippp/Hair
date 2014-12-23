@@ -10,4 +10,6 @@
 
 @interface HairDetailViewController : UIViewController
 
+- (id)initWithDetailImage:(UIImage *)hairDetailImage andStyleImage:(UIImage *)styleImage;
+
 @end
