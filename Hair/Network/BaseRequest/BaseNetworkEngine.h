@@ -12,10 +12,7 @@
 #import "NetService.h"
 
 //测试环境
-#define kAppBaseURL  @"api.yq.feedss.com"
-//线上环境
-//#define kAppBaseURL @"api.yunque.feedss.com"
-#define kAppBaseURLForChat @"58.248.249.25:8080/tconf"
+#define kAppBaseURL  @"api.hair.feedss.com"
 
 typedef void (^YQRequestSuccess)(NSDictionary *dictRet);        //成功的回调,dictRet代表网络返回结果
 typedef void (^YQRequestFailuer)(NSError *error);               //失败的回调,error代表网络访问失败的错误对象
@@ -27,7 +24,6 @@ typedef void (^YQOriginRetBlock)(NSData *originData, BOOL isInCache);  //获取�
 @interface BaseNetworkEngine : MKNetworkEngine
 
 + (BaseNetworkEngine *)sharedInstance;
-+ (BaseNetworkEngine *)sharedInstanceForChat; //  For群呼群聊平台
 
 /*
  *****************   参数若为remoteUrl，代表你请求的url为完整的url        ********************

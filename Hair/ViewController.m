@@ -133,7 +133,14 @@
 {
     static NSString *identify = @"Cell";
     PhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identify forIndexPath:indexPath];
-    cell.photoImg.image = [UIImage imageNamed:@"5.jpg"];
+    if (indexPath.row%3 == 0) {
+        cell.photoImg.image = [UIImage imageNamed:@"hair1.jpg"];
+    }else if (indexPath.row%3 == 1){
+        cell.photoImg.image = [UIImage imageNamed:@"hair2.jpg"];
+    }else if (indexPath.row%3 == 2){
+        cell.photoImg.image = [UIImage imageNamed:@"hair3.jpg"];
+    }
+    
     return cell;
 }
 

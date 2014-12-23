@@ -16,8 +16,7 @@
     static dispatch_once_t pred;
     
     dispatch_once(&pred, ^{
-        sharedInstance = [BaseNetworkEngine alloc];
-        sharedInstance = [sharedInstance init];
+        sharedInstance = [[BaseNetworkEngine alloc] init];
     });
     
     return sharedInstance;
@@ -26,29 +25,6 @@
 - (id)init
 {
     if(self = [super initWithHostName:kAppBaseURL])
-    {
-        [self useCache];
-    }
-    return self;
-}
-
-
-//  For 群呼群聊平台
-+ (BaseNetworkEngine *)sharedInstanceForChat
-{
-    static BaseNetworkEngine *sharedInstanceForChat = nil;
-    static dispatch_once_t predForChat;
-    
-    dispatch_once(&predForChat, ^{
-        sharedInstanceForChat = [[BaseNetworkEngine alloc] initForChat];
-    });
-    
-    return sharedInstanceForChat;
-}
-
-- (id)initForChat
-{
-    if(self = [super initWithHostName:kAppBaseURLForChat])
     {
         [self useCache];
     }
