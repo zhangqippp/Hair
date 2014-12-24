@@ -186,9 +186,12 @@
     
     NSArray *features = [faceDetector featuresInImage:[CIImage imageWithCGImage:self.originImage.CGImage] options:@{CIDetectorImageOrientation:[NSNumber numberWithInt:exifOrientation]}];
     
-    NSLog(@"features:%@",features);
     for (UIImageView *img in self.photoView.subviews) {
         [img removeFromSuperview];
+    }
+    if (features.count<=0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"未识别到头像，请重拍" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
     }
     for (CIFaceFeature *feature in features) {
         NSLog(@"face bounds:%f,%f,%f,%f",feature.bounds.origin.x,feature.bounds.origin.y,feature.bounds.size.width,feature.bounds.size.height);
@@ -254,6 +257,8 @@
         UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"照片已保存到相册" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
     }
 }
 
