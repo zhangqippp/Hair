@@ -33,8 +33,8 @@
         [self addGestureRecognizer:pinchGestureRecognizer];
         
         // 移动手势
-//        UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
-//        [self addGestureRecognizer:panGestureRecognizer];
+        UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
+        [self addGestureRecognizer:panGestureRecognizer];
     }
     return self;
 }
@@ -65,10 +65,21 @@
     }
 }
 
+// 处理拖拉手势
+- (void) panView:(UIPanGestureRecognizer *)panGestureRecognizer
+{
+    UIView *view = panGestureRecognizer.view;
+    if (panGestureRecognizer.state == UIGestureRecognizerStateBegan || panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
+        CGPoint translation = [panGestureRecognizer translationInView:view.superview];
+        [view setCenter:(CGPoint){view.center.x + translation.x, view.center.y + translation.y}];
+        [panGestureRecognizer setTranslation:CGPointZero inView:view.superview];
+    }
+}
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    self.isDragging = NO;
-    [super touchesBegan:touches withEvent:event];
-    self.beginLoc = [[touches anyObject] locationInView:self];
+//    self.isDragging = NO;
+//    [super touchesBegan:touches withEvent:event];
+//    self.beginLoc = [[touches anyObject] locationInView:self];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -82,19 +93,19 @@
 //                [self.delegate dragMove:self];
 //            }
 //        }
-        self.isDragging = YES;
-        
-        if (self.superview) {
-            [self.superview bringSubviewToFront:self];
-        }
-        
-        UITouch *touch = [touches anyObject];
-        CGPoint currentLocation = [touch locationInView:self];
-        
-        float offsetX = currentLocation.x - self.beginLoc.x;
-        float offsetY = currentLocation.y - self.beginLoc.y;
-        
-        self.center = CGPointMake(self.center.x + offsetX, self.center.y + offsetY);
+//        self.isDragging = YES;
+//        
+//        if (self.superview) {
+//            [self.superview bringSubviewToFront:self];
+//        }
+//        
+//        UITouch *touch = [touches anyObject];
+//        CGPoint currentLocation = [touch locationInView:self];
+//        
+//        float offsetX = currentLocation.x - self.beginLoc.x;
+//        float offsetY = currentLocation.y - self.beginLoc.y;
+//        
+//        self.center = CGPointMake(self.center.x + offsetX, self.center.y + offsetY);
         
 //        CGRect superviewFrame = self.superview.frame;
 //        CGRect frame = self.frame;

@@ -13,11 +13,11 @@
 
 #define Detail_Alert_Save_Tag 101
 
-@interface ExperienceVC ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAlertViewDelegate>
+@interface ExperienceVC ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 
-@property (nonatomic,strong) UIButton *cameraBtn;
 @property (nonatomic,strong) UIButton *editBtn;
 @property (nonatomic,strong) UIButton *saveBtn;
+@property (nonatomic,strong) UIButton *resetBtn;
 @property (nonatomic,strong) UIImageView *photoView;
 @property (nonatomic,strong) HairDisplayView *hairView;
 
@@ -36,11 +36,10 @@
     [self.view addSubview:self.photoView];
     [self.photoView addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
     
-    self.saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.saveBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.saveBtn setTitle:@"保存" forState:UIControlStateNormal];
-    [self.saveBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    [self.saveBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     self.saveBtn.backgroundColor = [UIColor whiteColor];
+    self.saveBtn.layer.cornerRadius = 5;
     self.saveBtn.translatesAutoresizingMaskIntoConstraints = NO;
     [self.saveBtn addTarget:self action:@selector(saveAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.saveBtn];
@@ -49,8 +48,12 @@
     [self.saveBtn addConstraint:[NSLayoutConstraint constraintWithItem:self.saveBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:60]];
     [self.saveBtn addConstraint:[NSLayoutConstraint constraintWithItem:self.saveBtn attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:40]];
     
-    //    UIImage *img = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"123" ofType:@"jpg"]];
-    //    self.originImage = img;
+    [self.view addSubview:self.resetBtn];
+    self.resetBtn.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.resetBtn attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:20]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.resetBtn attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:-20]];
+    [self.resetBtn addConstraint:[NSLayoutConstraint constraintWithItem:self.resetBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:60]];
+    [self.resetBtn addConstraint:[NSLayoutConstraint constraintWithItem:self.resetBtn attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:40]];
     
     // Do any additional setup after loading the view.
 }
@@ -103,6 +106,18 @@
     return _hairView;
 }
 
+- (UIButton *)resetBtn
+{
+    if (!_resetBtn) {
+        _resetBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        _resetBtn.backgroundColor = [UIColor whiteColor];
+        _resetBtn.layer.cornerRadius = 5;
+        [_resetBtn setTitle:@"重置" forState:UIControlStateNormal];
+        [_resetBtn addTarget:self action:@selector(resetAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _resetBtn;
+}
+
 #pragma mark - method
 - (void)enterCamera
 {
@@ -118,9 +133,17 @@
 
 - (void)saveAction:(id)sender
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"是否要将头像保存至照片库？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alert.tag = Detail_Alert_Save_Tag;
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"是否要将头像保存至照片库？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    alert.tag = Detail_Alert_Save_Tag;
+//    [alert show];
+    
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"保存至本地照片库", @"保存至云相册", nil];
+    [sheet showInView:self.view];
+}
+
+- (void)resetAction:(id)sender
+{
+    
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -143,7 +166,6 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     NSLog(@"image change ...");
-    //    CIImage *image = self.originImage.CIImage;
     
     int exifOrientation;
     switch (self.originImage.imageOrientation) {
@@ -188,7 +210,6 @@
         [alert show];
     }
     for (CIFaceFeature *feature in features) {
-        NSLog(@"face bounds:%f,%f,%f,%f",feature.bounds.origin.x,feature.bounds.origin.y,feature.bounds.size.width,feature.bounds.size.height);
         UIImageView *faceView = [[UIImageView alloc] init];
         CGRect rect = feature.bounds;
         rect.origin.x *= self.photoView.frame.size.width/self.originImage.size.width;
@@ -200,45 +221,14 @@
         rect.origin.y = a;
         faceView.frame = rect;
         
-        //        CGPoint center = faceView.center;
-        //        center.y = self.photoView.frame.size.height - center.y;
-        //        faceView.center = center;
-        
-        //        CGPoint center = faceView.center;
-        //        float m = center.x;
-        //        center.x = center.y;
-        //        center.y = m;
-        //        faceView.center = center;
         
         faceView.backgroundColor = [UIColor clearColor];
-        //        faceView.layer.borderColor = [[UIColor redColor] CGColor];
-        //        faceView.layer.borderWidth = 1;
         [self.photoView addSubview:faceView];
         CGRect frame = CGRectMake(0, 0, 480*rect.size.width/240, (480*rect.size.width/240)*800/480);
         self.hairView.frame = frame;
         self.hairView.center = CGPointMake(faceView.center.x, faceView.center.y+100);
-        //        self.hairView.layer.borderColor = [[UIColor blueColor] CGColor];
-        //        self.hairView.layer.borderWidth = 1;
         [self.photoView addSubview:self.hairView];
         
-        //        for (int i=1; i<10; i++) {
-        //            hairView.image = [UIImage imageNamed:[NSString stringWithFormat:@"h0%d",i]];
-        //            UIGraphicsBeginImageContext(self.photoView.frame.size);
-        //            [self.photoView.layer renderInContext:UIGraphicsGetCurrentContext()];
-        //            UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-        //            UIGraphicsEndImageContext();
-        //            NSData *imageData = UIImageJPEGRepresentation(image, 1);
-        //            [imageData writeToFile:[NSString stringWithFormat:@"/Users/qizhang/Desktop/me/%d.jpg",i] atomically:YES];
-        //        }
-        //        for (int i=10; i<33; i++) {
-        //            hairView.image = [UIImage imageNamed:[NSString stringWithFormat:@"h%d",i]];
-        //            UIGraphicsBeginImageContext(self.photoView.frame.size);
-        //            [self.photoView.layer renderInContext:UIGraphicsGetCurrentContext()];
-        //            UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-        //            UIGraphicsEndImageContext();
-        //            NSData *imageData = UIImageJPEGRepresentation(image, 1);
-        //            [imageData writeToFile:[NSString stringWithFormat:@"/Users/qizhang/Desktop/me/%d.jpg",i] atomically:YES];
-        //        }
     }
 }
 
@@ -253,6 +243,23 @@
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"照片已保存到相册" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
+    }
+}
+
+#pragma mark - UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        UIGraphicsBeginImageContext(self.photoView.frame.size);
+        [self.photoView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"照片已保存到相册" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }else if (buttonIndex == 1){
+        //叶伟二货接翔
+        
     }
 }
 
