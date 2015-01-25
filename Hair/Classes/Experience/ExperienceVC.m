@@ -110,6 +110,7 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    picker.cameraDevice=UIImagePickerControllerCameraDeviceFront;
     picker.mediaTypes = [NSArray arrayWithObjects:(NSString *)kUTTypeImage, nil];
     [self presentViewController:picker animated:YES completion:^{
         
