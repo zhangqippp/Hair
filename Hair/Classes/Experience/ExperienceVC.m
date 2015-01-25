@@ -28,16 +28,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.cameraBtn setTitle:@"拍照" forState:UIControlStateNormal];
-    [self.cameraBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [self.cameraBtn addTarget:self action:@selector(enterCamera) forControlEvents:UIControlEventTouchUpInside];
-    [self.cameraBtn sizeToFit];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.cameraBtn];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(enterCamera)];
     
     self.photoView = [[UIImageView alloc] init];
-    self.photoView.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
-    self.photoView.backgroundColor = [UIColor grayColor];
+    self.photoView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     self.photoView.userInteractionEnabled = YES;
     [self.view addSubview:self.photoView];
     [self.photoView addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
@@ -222,7 +216,7 @@
         [self.photoView addSubview:faceView];
         CGRect frame = CGRectMake(0, 0, 480*rect.size.width/240, (480*rect.size.width/240)*800/480);
         self.hairView.frame = frame;
-        self.hairView.center = CGPointMake(faceView.center.x+15, faceView.center.y+75);
+        self.hairView.center = CGPointMake(faceView.center.x, faceView.center.y+100);
         //        self.hairView.layer.borderColor = [[UIColor blueColor] CGColor];
         //        self.hairView.layer.borderWidth = 1;
         [self.photoView addSubview:self.hairView];

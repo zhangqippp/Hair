@@ -118,6 +118,18 @@
     return _collectionView;
 }
 
+- (NSMutableArray *)photoArray
+{
+    if (!_photoArray) {
+        _photoArray = [NSMutableArray array];
+        for (NSInteger i=1; i<15; i++) {
+            NSString *imageName = [NSString stringWithFormat:@"hair%ld",(long)i];
+            [_photoArray addObject:imageName];
+        }
+    }
+    return _photoArray;
+}
+
 #pragma mark -- UICollectionViewDataSource
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     
@@ -126,20 +138,14 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _count;
+    return self.photoArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *identify = @"Cell";
     PhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identify forIndexPath:indexPath];
-    if (indexPath.row%3 == 0) {
-        cell.photoImg.image = [UIImage imageNamed:@"hair1.jpg"];
-    }else if (indexPath.row%3 == 1){
-        cell.photoImg.image = [UIImage imageNamed:@"hair2.jpg"];
-    }else if (indexPath.row%3 == 2){
-        cell.photoImg.image = [UIImage imageNamed:@"hair3.jpg"];
-    }
+    cell.photoImg.image = [UIImage imageNamed:[self.photoArray objectAtIndex:indexPath.row]];
     
     return cell;
 }
@@ -153,23 +159,13 @@
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    return CGSizeMake((self.view.width - 40)/3,300);
+    return CGSizeMake((self.view.width - 40)/3,800*(self.view.width - 40)/3/480);
 }
 
 #pragma mark --UICollectionViewDelegate
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    UIImage *hairImage = nil;
-    UIImage *styleImage = nil;
-    if (indexPath.row%3 == 0) {
-        hairImage = [UIImage imageNamed:@"hair1.jpg"];
-        styleImage = [UIImage imageNamed:@"style1"];
-    }else if (indexPath.row%3 == 1){
-        hairImage = [UIImage imageNamed:@"hair2.jpg"];
-        styleImage = [UIImage imageNamed:@"style2"];
-    }else if (indexPath.row%3 == 2){
-        hairImage = [UIImage imageNamed:@"hair3.jpg"];
-        styleImage = [UIImage imageNamed:@"style3"];
-    }
+    UIImage *hairImage = [UIImage imageNamed:[self.photoArray objectAtIndex:indexPath.row]];
+    UIImage *styleImage = [UIImage imageNamed:[self.photoArray objectAtIndex:indexPath.row]];
     HairDetailViewController *detail = [[HairDetailViewController alloc] initWithDetailImage:hairImage andStyleImage:styleImage];
     [self.navigationController pushViewController:detail animated:YES];
 }

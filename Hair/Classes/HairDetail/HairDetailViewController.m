@@ -35,11 +35,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     [self.view addSubview:self.hairDetailView];
     
-    self.experienceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.experienceBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.experienceBtn setTitle:@"体验" forState:UIControlStateNormal];
-    [self.experienceBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.experienceBtn addTarget:self action:@selector(enterCamera) forControlEvents:UIControlEventTouchUpInside];
     [self.experienceBtn sizeToFit];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.experienceBtn];
@@ -68,7 +69,7 @@
     if (!_hairDetailView) {
         _hairDetailView = [[UIImageView alloc] init];
         _hairDetailView.frame = self.view.bounds;
-        _hairDetailView.backgroundColor = [UIColor grayColor];
+        _hairDetailView.backgroundColor = [UIColor whiteColor];
     }
     return _hairDetailView;
 }
@@ -78,8 +79,8 @@
 {
     _hairImage = hairImage;
     self.hairDetailView.image = hairImage;
-    self.hairDetailView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.width*hairImage.size.height/hairImage.size.width);
-//    self.hairDetailView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
+    self.hairDetailView.frame = CGRectMake(0, 0, self.view.bounds.size.height*hairImage.size.width/hairImage.size.height, self.view.bounds.size.height);
+    self.hairDetailView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
 }
 
 #pragma mark - method
