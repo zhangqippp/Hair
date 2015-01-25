@@ -67,6 +67,7 @@
 		429EEDDC1A45D79100E1E631 /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 429EEDD71A45D79100E1E631 /* MJRefreshHeaderView.m */; };
 		42B063751A7528D1002E5F41 /* HairService.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B063741A7528D1002E5F41 /* HairService.m */; };
 		42B063781A752A1D002E5F41 /* T8KeychainHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B063771A752A1D002E5F41 /* T8KeychainHelper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		42B0637B1A75394A002E5F41 /* T8SandboxHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B0637A1A75394A002E5F41 /* T8SandboxHelper.m */; };
 		6D46881D1A441B3E005942C9 /* h01.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D4687FD1A441B3E005942C9 /* h01.png */; };
 		6D46881E1A441B3E005942C9 /* h02.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D4687FE1A441B3E005942C9 /* h02.png */; };
 		6D46881F1A441B3E005942C9 /* h03.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D4687FF1A441B3E005942C9 /* h03.png */; };
@@ -217,6 +218,8 @@
 		42B063741A7528D1002E5F41 /* HairService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HairService.m; sourceTree = "<group>"; };
 		42B063761A752A1D002E5F41 /* T8KeychainHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T8KeychainHelper.h; sourceTree = "<group>"; };
 		42B063771A752A1D002E5F41 /* T8KeychainHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = T8KeychainHelper.m; sourceTree = "<group>"; };
+		42B063791A75394A002E5F41 /* T8SandboxHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T8SandboxHelper.h; sourceTree = "<group>"; };
+		42B0637A1A75394A002E5F41 /* T8SandboxHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = T8SandboxHelper.m; sourceTree = "<group>"; };
 		6D4687FD1A441B3E005942C9 /* h01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = h01.png; sourceTree = "<group>"; };
 		6D4687FE1A441B3E005942C9 /* h02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = h02.png; sourceTree = "<group>"; };
 		6D4687FF1A441B3E005942C9 /* h03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = h03.png; sourceTree = "<group>"; };
@@ -508,6 +511,8 @@
 		4236E5461A39FD2F00621B45 /* Assistant&Helper */ = {
 			isa = PBXGroup;
 			children = (
+				42B063791A75394A002E5F41 /* T8SandboxHelper.h */,
+				42B0637A1A75394A002E5F41 /* T8SandboxHelper.m */,
 				42B063761A752A1D002E5F41 /* T8KeychainHelper.h */,
 				42B063771A752A1D002E5F41 /* T8KeychainHelper.m */,
 				4236E54A1A39FD7A00621B45 /* YQGlobalHelper.h */,
@@ -878,6 +883,7 @@
 				42B063751A7528D1002E5F41 /* HairService.m in Sources */,
 				4236E52C1A39F71200621B45 /* MKNetworkEngine.m in Sources */,
 				4236E5261A39F71200621B45 /* NSData+MKBase64.m in Sources */,
+				42B0637B1A75394A002E5F41 /* T8SandboxHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

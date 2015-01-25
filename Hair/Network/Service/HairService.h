@@ -10,9 +10,16 @@
 
 @interface HairService : NSObject
 
-+ (NetService *)loginWithPhoneNum:(NSString *)phoneNum
-                         password:(NSString *)password
-                     successBlock:(YQRequestSuccess)successBlock
-                     failureBlock:(YQRequestFailuer)failureBlock;
+/**
+ *  上传合成之后的发型
+ *
+ *  @param successBlock
+ *  @param failureBlock
+ *
+ *  @return
+ */
++ (NetService *)uploadHairFileWithPath:(NSString *)filePath
+                          successBlock:(YQRequestSuccess)successBlock
+                          failureBlock:(YQRequestFailuer)failureBlock;
 
 @end

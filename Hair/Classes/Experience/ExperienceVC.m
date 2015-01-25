@@ -10,6 +10,9 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <ImageIO/ImageIO.h>
 #import "HairDisplayView.h"
+#import "T8SandboxHelper.h"
+#import "HairService.h"
+#import "YQMessageHelper.h"
 
 #define Detail_Alert_Save_Tag 101
 
@@ -259,7 +262,28 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"照片已保存到相册" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
     }else if (buttonIndex == 1){
-        //叶伟二货接翔
+        UIGraphicsBeginImageContext(self.photoView.frame.size);
+        [self.photoView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
+        
+        NSString* filePath = [[T8SandboxHelper tmpPath] stringByAppendingPathComponent:@"1.jpg"];
+        if ([imageData writeToFile:filePath atomically:YES]) {
+            [YQMessageHelper showActivity];
+            [HairService uploadHairFileWithPath:filePath successBlock:^(NSDictionary *dictRet) {
+                [YQMessageHelper hideActivity];
+                if ([[dictRet objectForKey:@"code"] integerValue] == 0) {
+                    [YQMessageHelper showMessage:@"上传成功"];
+                }else{
+                    [YQMessageHelper showMessage:[dictRet objectForKey:@"msg"]];
+                }
+            } failureBlock:^(NSError *error) {
+                [YQMessageHelper hideActivity];
+                [YQMessageHelper showMessage:@"上传失败"];
+            }];
+        }
         
     }
 }
