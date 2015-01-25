@@ -7,6 +7,7 @@
 //
 
 #import "BaseNetworkEngine.h"
+#import "T8KeychainHelper.h"
 
 @implementation BaseNetworkEngine
 
@@ -387,16 +388,13 @@
 - (NSDictionary *)getHttpHeaderParams
 {
     NSMutableDictionary *mutDictHeaderParams = [NSMutableDictionary dictionary];
-//
-//    [mutDictHeaderParams setObject:@"iphone" forKey:@"UserAgent"];
-//    [mutDictHeaderParams setObject:@"appstore" forKey:@"channelId"];
-//    [mutDictHeaderParams setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] forKey:@"productId"];
-//    [mutDictHeaderParams setObject:[UserInfoAgent getUDID] forKey:@"uniqueId"];
-//    [mutDictHeaderParams setObject:[UserInfoAgent getUserId] forKey:@"userId"];
-//    [mutDictHeaderParams setObject:[UserInfoAgent getUserToken] forKey:@"userToken"];
-//    [mutDictHeaderParams setObject:[UserInfoAgent getCompanyId] forKey:@"companyid"];
+
+    [mutDictHeaderParams setObject:@"iphone" forKey:@"UserAgent"];
+    [mutDictHeaderParams setObject:@"appstore" forKey:@"channelId"];
+    [mutDictHeaderParams setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] forKey:@"productId"];
+    [mutDictHeaderParams setObject:[T8KeychainHelper UDID] forKey:@"uniqueId"];
     
-//    NSLog(@"%@",mutDictHeaderParams);
+    NSLog(@"%@",mutDictHeaderParams);
     
     return mutDictHeaderParams;
 }

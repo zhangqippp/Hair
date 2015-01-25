@@ -65,6 +65,8 @@
 		429EEDDA1A45D79100E1E631 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 429EEDD31A45D79100E1E631 /* MJRefreshConst.m */; };
 		429EEDDB1A45D79100E1E631 /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 429EEDD51A45D79100E1E631 /* MJRefreshFooterView.m */; };
 		429EEDDC1A45D79100E1E631 /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 429EEDD71A45D79100E1E631 /* MJRefreshHeaderView.m */; };
+		42B063751A7528D1002E5F41 /* HairService.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B063741A7528D1002E5F41 /* HairService.m */; };
+		42B063781A752A1D002E5F41 /* T8KeychainHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B063771A752A1D002E5F41 /* T8KeychainHelper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6D46881D1A441B3E005942C9 /* h01.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D4687FD1A441B3E005942C9 /* h01.png */; };
 		6D46881E1A441B3E005942C9 /* h02.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D4687FE1A441B3E005942C9 /* h02.png */; };
 		6D46881F1A441B3E005942C9 /* h03.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D4687FF1A441B3E005942C9 /* h03.png */; };
@@ -211,6 +213,10 @@
 		429EEDD71A45D79100E1E631 /* MJRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeaderView.m; sourceTree = "<group>"; };
 		42A4DDB11A49DA5400162177 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		42A4DDB21A49DA5400162177 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		42B063731A7528D1002E5F41 /* HairService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HairService.h; sourceTree = "<group>"; };
+		42B063741A7528D1002E5F41 /* HairService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HairService.m; sourceTree = "<group>"; };
+		42B063761A752A1D002E5F41 /* T8KeychainHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T8KeychainHelper.h; sourceTree = "<group>"; };
+		42B063771A752A1D002E5F41 /* T8KeychainHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = T8KeychainHelper.m; sourceTree = "<group>"; };
 		6D4687FD1A441B3E005942C9 /* h01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = h01.png; sourceTree = "<group>"; };
 		6D4687FE1A441B3E005942C9 /* h02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = h02.png; sourceTree = "<group>"; };
 		6D4687FF1A441B3E005942C9 /* h03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = h03.png; sourceTree = "<group>"; };
@@ -316,6 +322,8 @@
 		4236E4BD1A39F49200621B45 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				42B063731A7528D1002E5F41 /* HairService.h */,
+				42B063741A7528D1002E5F41 /* HairService.m */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -500,6 +508,8 @@
 		4236E5461A39FD2F00621B45 /* Assistant&Helper */ = {
 			isa = PBXGroup;
 			children = (
+				42B063761A752A1D002E5F41 /* T8KeychainHelper.h */,
+				42B063771A752A1D002E5F41 /* T8KeychainHelper.m */,
 				4236E54A1A39FD7A00621B45 /* YQGlobalHelper.h */,
 				4236E54B1A39FD7A00621B45 /* YQGlobalHelper.m */,
 				4236E5471A39FD5700621B45 /* YQMessageHelper.h */,
@@ -850,6 +860,7 @@
 				429EEDDC1A45D79100E1E631 /* MJRefreshHeaderView.m in Sources */,
 				4236E52D1A39F71200621B45 /* MKNetworkOperation.m in Sources */,
 				6DE30DD81A457866005FC6EE /* PhotoViewCell.m in Sources */,
+				42B063781A752A1D002E5F41 /* T8KeychainHelper.m in Sources */,
 				6D7A0D0E1A34B62600B7E6D1 /* HairDetailViewController.m in Sources */,
 				4236E5251A39F71200621B45 /* NSAlert+MKNetworkKitAdditions.m in Sources */,
 				4236E52F1A39F71200621B45 /* Toast+UIView.m in Sources */,
@@ -864,6 +875,7 @@
 				4236E5221A39F71200621B45 /* BlockBackground.m in Sources */,
 				4236E52E1A39F71200621B45 /* MKReachability.m in Sources */,
 				4236E52B1A39F71200621B45 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
+				42B063751A7528D1002E5F41 /* HairService.m in Sources */,
 				4236E52C1A39F71200621B45 /* MKNetworkEngine.m in Sources */,
 				4236E5261A39F71200621B45 /* NSData+MKBase64.m in Sources */,
 			);
