@@ -13,6 +13,7 @@
 #import "T8SandboxHelper.h"
 #import "HairService.h"
 #import "YQMessageHelper.h"
+#import "QRCodeGenerator.h"
 
 #define Detail_Alert_Save_Tag 101
 
@@ -23,6 +24,9 @@
 @property (nonatomic,strong) UIButton *resetBtn;
 @property (nonatomic,strong) UIImageView *photoView;
 @property (nonatomic,strong) HairDisplayView *hairView;
+
+@property (nonatomic,strong) UIView *QRCodeView;
+@property (nonatomic,strong) UIImageView *QRCodeImg;
 
 @end
 
@@ -58,7 +62,8 @@
     [self.resetBtn addConstraint:[NSLayoutConstraint constraintWithItem:self.resetBtn attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:60]];
     [self.resetBtn addConstraint:[NSLayoutConstraint constraintWithItem:self.resetBtn attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:40]];
     
-    // Do any additional setup after loading the view.
+    [self.view addSubview:self.QRCodeView];
+    self.QRCodeView.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -121,6 +126,29 @@
     return _resetBtn;
 }
 
+- (UIView *)QRCodeView
+{
+    if (!_QRCodeView) {
+        _QRCodeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
+        _QRCodeView.backgroundColor = [UIColor whiteColor];
+        
+        _QRCodeImg = [[UIImageView alloc] init];
+        _QRCodeImg.center = _QRCodeView.center;
+        _QRCodeImg.size = CGSizeMake(self.view.width/2, self.view.width/2);
+        [_QRCodeView addSubview:_QRCodeImg];
+        
+        UIButton *hideButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        hideButton.size = CGSizeMake(100, 50);
+        hideButton.center = CGPointMake(_QRCodeView.centerX, _QRCodeImg.bottom+50);
+        hideButton.backgroundColor = [UIColor whiteColor];
+        hideButton.layer.cornerRadius = 5;
+        [hideButton setTitle:@"分享" forState:UIControlStateNormal];
+        [hideButton addTarget:self action:@selector(shareHair:) forControlEvents:UIControlEventTouchUpInside];
+        [_QRCodeView addSubview:hideButton];
+    }
+    return _QRCodeView;
+}
+
 #pragma mark - method
 - (void)enterCamera
 {
@@ -148,6 +176,12 @@
 - (void)resetAction:(id)sender
 {
     
+}
+
+- (void)shareHair:(UIButton *)sender
+{
+    self.QRCodeView.hidden = YES;
+    [YQMessageHelper showMessage:@"正在开发中"];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -271,11 +305,15 @@
         
         NSString* filePath = [[T8SandboxHelper tmpPath] stringByAppendingPathComponent:@"1.jpg"];
         if ([imageData writeToFile:filePath atomically:YES]) {
+            
             [YQMessageHelper showActivity];
+            __weak typeof(self) weakSelf = self;
             [HairService uploadHairFileWithPath:filePath successBlock:^(NSDictionary *dictRet) {
                 [YQMessageHelper hideActivity];
                 if ([[dictRet objectForKey:@"code"] integerValue] == 0) {
-                    [YQMessageHelper showMessage:@"上传成功"];
+
+                    weakSelf.QRCodeView.hidden = NO;
+                    weakSelf.QRCodeImg.image = [QRCodeGenerator qrImageForString:[[dictRet objectForKey:@"data"] objectForKey:@"file"] imageSize:self.QRCodeImg.size.width];
                 }else{
                     [YQMessageHelper showMessage:[dictRet objectForKey:@"msg"]];
                 }
