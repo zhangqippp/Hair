@@ -16,15 +16,12 @@
                      failureBlock:(YQRequestFailuer)failureBlock
 {
     NSMutableDictionary *mutDict = [NSMutableDictionary dictionary];
-    [mutDict addObject:phoneNum forKey:@"phone"];
-    [mutDict addObject:password forKey:@"password"];
-    [mutDict addObject:@"ture" forKey:@"has_user_filters"];
-    [mutDict addObject:@"ture" forKey:@"has_user_groups"];
+    
     
     return [[BaseNetworkEngine sharedInstance] postRequestUrlPath:@"/v1.0/passport/signin" dictParams:mutDict successBlock:^(NSDictionary *dictRet) {
         successBlock(dictRet);
-    } failureBlock:^(NSDictionary *dictRet, NSError *error) {
-        failureBlock(dictRet,error);
+    } failureBlock:^(NSError *error) {
+        failureBlock(error);
     }];
 }
 
