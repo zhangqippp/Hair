@@ -144,7 +144,7 @@
 
 - (void)resetAction:(id)sender
 {
-    
+    self.originImage = self.originImage;
 }
 
 #pragma mark - UIImagePickerControllerDelegate
