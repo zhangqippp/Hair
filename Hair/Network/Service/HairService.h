@@ -10,6 +10,9 @@
 
 @interface HairService : NSObject
 
++ (NetService *)getTagListsuccessBlock:(YQRequestSuccess)successBlock
+                          failureBlock:(YQRequestFailuer)failureBlock;
+
 /**
  *  发型列表
  *

@@ -76,6 +76,8 @@
 		42B063901A754278002E5F41 /* rscode.c in Sources */ = {isa = PBXBuildFile; fileRef = 42B063871A754278002E5F41 /* rscode.c */; };
 		42B063911A754278002E5F41 /* split.c in Sources */ = {isa = PBXBuildFile; fileRef = 42B063891A754278002E5F41 /* split.c */; };
 		42B063941A75428C002E5F41 /* QRCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B063931A75428C002E5F41 /* QRCodeGenerator.m */; };
+		42EEC6A31A7E95BA00FE06D4 /* XBPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EEC6A11A7E95BA00FE06D4 /* XBPickerViewController.m */; };
+		42EEC6A41A7E95BA00FE06D4 /* XBPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42EEC6A21A7E95BA00FE06D4 /* XBPickerViewController.xib */; };
 		6D46881D1A441B3E005942C9 /* h01.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D4687FD1A441B3E005942C9 /* h01.png */; };
 		6D46881E1A441B3E005942C9 /* h02.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D4687FE1A441B3E005942C9 /* h02.png */; };
 		6D46881F1A441B3E005942C9 /* h03.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D4687FF1A441B3E005942C9 /* h03.png */; };
@@ -244,6 +246,9 @@
 		42B0638A1A754278002E5F41 /* split.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = split.h; sourceTree = "<group>"; };
 		42B063921A75428C002E5F41 /* QRCodeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeGenerator.h; sourceTree = "<group>"; };
 		42B063931A75428C002E5F41 /* QRCodeGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeGenerator.m; sourceTree = "<group>"; };
+		42EEC6A01A7E95BA00FE06D4 /* XBPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBPickerViewController.h; sourceTree = "<group>"; };
+		42EEC6A11A7E95BA00FE06D4 /* XBPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBPickerViewController.m; sourceTree = "<group>"; };
+		42EEC6A21A7E95BA00FE06D4 /* XBPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XBPickerViewController.xib; sourceTree = "<group>"; };
 		6D4687FD1A441B3E005942C9 /* h01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = h01.png; sourceTree = "<group>"; };
 		6D4687FE1A441B3E005942C9 /* h02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = h02.png; sourceTree = "<group>"; };
 		6D4687FF1A441B3E005942C9 /* h03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = h03.png; sourceTree = "<group>"; };
@@ -358,6 +363,7 @@
 		4236E4BE1A39F49200621B45 /* Thirdpart */ = {
 			isa = PBXGroup;
 			children = (
+				42EEC69F1A7E95BA00FE06D4 /* XBPickerViewController */,
 				42B0637C1A754278002E5F41 /* libqrencode */,
 				429EEDCD1A45D79100E1E631 /* MJRefresh */,
 				4236E4C21A39F71200621B45 /* BlockAlertComponent */,
@@ -588,6 +594,23 @@
 			path = libqrencode;
 			sourceTree = "<group>";
 		};
+		42EEC69F1A7E95BA00FE06D4 /* XBPickerViewController */ = {
+			isa = PBXGroup;
+			children = (
+				42EEC6A01A7E95BA00FE06D4 /* XBPickerViewController.h */,
+				42EEC6A11A7E95BA00FE06D4 /* XBPickerViewController.m */,
+				42EEC6A21A7E95BA00FE06D4 /* XBPickerViewController.xib */,
+			);
+			path = XBPickerViewController;
+			sourceTree = "<group>";
+		};
+		42EEC6A51A7E98D600FE06D4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		6D4687FC1A441B3E005942C9 /* hair_style */ = {
 			isa = PBXGroup;
 			children = (
@@ -649,6 +672,7 @@
 		6D7A0CDE1A34B4C400B7E6D1 /* Hair */ = {
 			isa = PBXGroup;
 			children = (
+				42EEC6A51A7E98D600FE06D4 /* Model */,
 				6D7A0CE31A34B4C400B7E6D1 /* AppDelegate.h */,
 				6D7A0CE41A34B4C400B7E6D1 /* AppDelegate.m */,
 				6D7A0CE61A34B4C400B7E6D1 /* ViewController.h */,
@@ -868,6 +892,7 @@
 				6D4688371A441B3E005942C9 /* h27.png in Resources */,
 				6D4688401A447578005942C9 /* 456.png in Resources */,
 				4236E5151A39F71200621B45 /* alert-black-button.png in Resources */,
+				42EEC6A41A7E95BA00FE06D4 /* XBPickerViewController.xib in Resources */,
 				6D46882B1A441B3E005942C9 /* h15.png in Resources */,
 				6D46882E1A441B3E005942C9 /* h18.png in Resources */,
 				6D4688361A441B3E005942C9 /* h26.png in Resources */,
@@ -934,6 +959,7 @@
 				42B0638E1A754278002E5F41 /* qrinput.c in Sources */,
 				42B063901A754278002E5F41 /* rscode.c in Sources */,
 				42B063941A75428C002E5F41 /* QRCodeGenerator.m in Sources */,
+				42EEC6A31A7E95BA00FE06D4 /* XBPickerViewController.m in Sources */,
 				4236E52B1A39F71200621B45 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
 				42B063751A7528D1002E5F41 /* HairService.m in Sources */,
 				42B0638B1A754278002E5F41 /* bitstream.c in Sources */,

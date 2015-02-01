@@ -10,6 +10,8 @@
 #import "MJRefresh.h"
 #import "PhotoViewCell.h"
 #import "HairDetailViewController.h"
+#import "HairService.h"
+#import "XBPickerViewController.h"
 
 @interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,MJRefreshBaseViewDelegate>
 {
@@ -20,6 +22,9 @@
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *photoArray;
 @property (nonatomic, assign) NSInteger count;
+@property (nonatomic, strong) UIButton *selectButton;
+@property (nonatomic, strong) XBPickerViewController *pickerController;
+@property (nonatomic, strong) NSArray *tags;
 
 @end
 
@@ -28,6 +33,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.navigationItem setTitle:@"美发博物馆"];
+    
+    self.selectButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [self.selectButton setTitle:@"筛选" forState:UIControlStateNormal];
+    [self.selectButton addTarget:self action:@selector(showPickerView:) forControlEvents:UIControlEventTouchUpInside];
+    [self.selectButton sizeToFit];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.selectButton];
     
     [self.view addSubview:self.collectionView];
     
@@ -44,6 +55,16 @@
     footer.scrollView = self.collectionView;
     footer.delegate = self;
     _footer = footer;
+    
+    __weak typeof(self) weakSelf = self;
+    [HairService getTagListsuccessBlock:^(NSDictionary *dictRet) {
+        [[NSUserDefaults standardUserDefaults] setObject:[dictRet objectForKey:@"data"] forKey:@"data"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        weakSelf.tags = [[dictRet objectForKey:@"data"] objectForKey:@"list"];
+        NSLog(@"!!!!!%@",weakSelf.tags)
+    } failureBlock:^(NSError *error) {
+        
+    }];
 }
 
 - (void)dealloc
@@ -55,6 +76,16 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)showPickerView:(UIButton *)sender
+{
+    if (!_pickerController) {
+        self.pickerController = [XBPickerViewController pickerViewController];
+    }
+    
+    _pickerController.titles = self.tags;
+    [_pickerController showInViewController:self];
 }
 
 - (void)doneWithView:(MJRefreshBaseView *)refreshView

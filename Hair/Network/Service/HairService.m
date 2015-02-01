@@ -10,6 +10,18 @@
 
 @implementation HairService
 
++ (NetService *)getTagListsuccessBlock:(YQRequestSuccess)successBlock
+                          failureBlock:(YQRequestFailuer)failureBlock
+{
+    NSString *urlPath = @"/struct/index";
+    
+    return [[BaseNetworkEngine sharedInstance] sendRequestUrlPath:urlPath dictParams:nil successBlock:^(NSDictionary *dictRet) {
+        successBlock(dictRet);
+    } failureBlock:^(NSError *error) {
+        failureBlock(error);
+    }];
+}
+
 + (NetService *)getHairListWithLastUpdateTime:(NSString *)lastUpdateTime
                                  successBlock:(YQRequestSuccess)successBlock
                                  failureBlock:(YQRequestFailuer)failureBlock
