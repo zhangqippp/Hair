@@ -61,7 +61,13 @@
         [[NSUserDefaults standardUserDefaults] setObject:[dictRet objectForKey:@"data"] forKey:@"data"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         weakSelf.tags = [[dictRet objectForKey:@"data"] objectForKey:@"list"];
-        NSLog(@"!!!!!%@",weakSelf.tags)
+    } failureBlock:^(NSError *error) {
+        
+    }];
+    
+    [HairService getHairListWithLastUpdateTime:@"0" successBlock:^(NSDictionary *dictRet) {
+        weakSelf.photoArray = [[dictRet objectForKey:@"data"] objectForKey:@"list"];
+        [weakSelf.collectionView reloadData];
     } failureBlock:^(NSError *error) {
         
     }];
@@ -153,10 +159,10 @@
 {
     if (!_photoArray) {
         _photoArray = [NSMutableArray array];
-        for (NSInteger i=1; i<15; i++) {
-            NSString *imageName = [NSString stringWithFormat:@"hair%ld",(long)i];
-            [_photoArray addObject:imageName];
-        }
+//        for (NSInteger i=1; i<15; i++) {
+//            NSString *imageName = [NSString stringWithFormat:@"hair%ld",(long)i];
+//            [_photoArray addObject:imageName];
+//        }
     }
     return _photoArray;
 }
@@ -176,8 +182,9 @@
 {
     static NSString *identify = @"Cell";
     PhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identify forIndexPath:indexPath];
-    cell.photoImg.image = [UIImage imageNamed:[self.photoArray objectAtIndex:indexPath.row]];
-    
+//    cell.photoImg.image = [UIImage imageNamed:[self.photoArray objectAtIndex:indexPath.row]];
+    [cell.photoImg setImageFromURL:[NSURL URLWithString:[[self.photoArray objectAtIndex:indexPath.section*3+indexPath.row] objectForKey:@"mtfile"]] placeHolderImage:nil];
+    NSLog(@"%@",[[self.photoArray objectAtIndex:indexPath.section*3+indexPath.row] objectForKey:@"mtfile"]);
     return cell;
 }
 
