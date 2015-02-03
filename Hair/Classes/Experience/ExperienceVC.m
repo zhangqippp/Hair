@@ -259,7 +259,6 @@
         rect.origin.y = a;
         faceView.frame = rect;
         
-        
         faceView.backgroundColor = [UIColor clearColor];
         [self.photoView addSubview:faceView];
         CGRect frame = CGRectMake(0, 0, 480*rect.size.width/240, (480*rect.size.width/240)*800/480);
