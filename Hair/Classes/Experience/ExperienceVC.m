@@ -28,6 +28,8 @@
 @property (nonatomic,strong) UIView *QRCodeView;
 @property (nonatomic,strong) UIImageView *QRCodeImg;
 
+@property (nonatomic,assign) CGFloat score;
+
 @end
 
 @implementation ExperienceVC
@@ -177,9 +179,6 @@
 //    alert.tag = Detail_Alert_Save_Tag;
 //    [alert show];
     
-    //打分机制
-    
-    
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"保存至本地照片库", @"保存至云相册", nil];
     [sheet showInView:self.view];
 }
@@ -258,7 +257,9 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"未识别到头像，请重拍" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
     }
+    
     for (CIFaceFeature *feature in features) {
+        
         UIImageView *faceView = [[UIImageView alloc] init];
         CGRect rect = feature.bounds;
         rect.origin.x *= self.photoView.frame.size.width/self.originImage.size.width;
@@ -277,6 +278,57 @@
         self.hairView.center = CGPointMake(faceView.center.x, faceView.center.y+100);
         [self.photoView addSubview:self.hairView];
         
+        //打分机制
+        self.score = 70.0f;
+        
+        CGFloat angleScore = 10.0f;
+        if (ABS(feature.faceAngle) < 5.0) {
+            angleScore = 10.0f;
+        }else if (ABS(feature.faceAngle) < 45.0){
+            angleScore -= angleScore*(ABS(feature.faceAngle)-5.0)/40;
+        }else{
+            angleScore = 0;
+        }
+        self.score += angleScore;
+        
+        CGFloat locationXScore = 10.0f;
+        if (rect.origin.x<0 || rect.origin.x+rect.size.width>self.photoView.frame.size.width) {
+            locationXScore = 0;
+        }else{
+            locationXScore -= locationXScore*(ABS(((rect.origin.x + rect.size.width)/2) - self.photoView.frame.size.width/2)/(self.photoView.frame.size.width/2 - rect.size.width/2));
+        }
+        self.score += locationXScore;
+        
+        CGFloat locationYScore = 10.0f;
+        if (rect.origin.y<0 || rect.origin.y+rect.size.height>self.photoView.frame.size.height) {
+            locationYScore = 0;
+        }
+        self.score += locationYScore;
+        
+        if (feature.hasSmile) {
+            self.score += 5;
+        }
+        
+        if (!feature.hasLeftEyePosition) {
+            self.score -= 3;
+        }
+        
+        if (!feature.hasRightEyePosition) {
+            self.score -= 3;
+        }
+        
+        if (!feature.hasMouthPosition) {
+            self.score -= 3;
+        }
+        
+        NSString *scoreInfo = @"";
+        if (self.score < 100) {
+            scoreInfo = [NSString stringWithFormat:@"您的得分为：%.0f分",self.score];
+        }else{
+            scoreInfo = [NSString stringWithFormat:@"您的得分已突破天际：%.0f分",self.score];
+        }
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:scoreInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
     }
 }
 
