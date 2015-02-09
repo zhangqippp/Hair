@@ -13,4 +13,6 @@
 @property (nonatomic,strong) UIImage *originImage;
 @property (nonatomic,strong) UIImage *styleImage;
 
+@property (nonatomic,copy) NSString *styleImageUrl;
+
 @end

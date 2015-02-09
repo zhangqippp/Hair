@@ -202,9 +202,9 @@
 
 #pragma mark --UICollectionViewDelegate
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    UIImage *hairImage = [UIImage imageNamed:[self.photoArray objectAtIndex:indexPath.row]];
-    UIImage *styleImage = [UIImage imageNamed:[self.photoArray objectAtIndex:indexPath.row]];
-    HairDetailViewController *detail = [[HairDetailViewController alloc] initWithDetailImage:hairImage andStyleImage:styleImage];
+    NSString *hairImageUrl = [[self.photoArray objectAtIndex:indexPath.row] objectForKey:@"mtfile"];
+    NSString *styleImageUrl = [[self.photoArray objectAtIndex:indexPath.row] objectForKey:@"mtfile"];
+    HairDetailViewController *detail = [[HairDetailViewController alloc] initWithDetailUrl:hairImageUrl andStyleUrl:styleImageUrl];
     [self.navigationController pushViewController:detail animated:YES];
 }
 

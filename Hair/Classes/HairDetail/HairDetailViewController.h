@@ -12,4 +12,6 @@
 
 - (id)initWithDetailImage:(UIImage *)hairDetailImage andStyleImage:(UIImage *)styleImage;
 
+- (id)initWithDetailUrl:(NSString *)hairDetailUrl andStyleUrl:(NSString *)styleUrl;
+
 @end

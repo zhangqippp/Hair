@@ -15,6 +15,8 @@
 
 @property (nonatomic,strong) UIImage *hairImage;
 @property (nonatomic,strong) UIImage *styleImage;
+@property (nonatomic,copy) NSString *hairUrl;
+@property (nonatomic,copy) NSString *styleUrl;
 @property (nonatomic,strong) UIImageView *hairDetailView;
 @property (nonatomic,strong) UIButton *experienceBtn;
 
@@ -28,6 +30,16 @@
     if (self) {
         self.hairImage = hairDetailImage;
         self.styleImage = styleImage;
+    }
+    return self;
+}
+
+- (id)initWithDetailUrl:(NSString *)hairDetailUrl andStyleUrl:(NSString *)styleUrl
+{
+    self = [super init];
+    if (self) {
+        self.hairUrl = hairDetailUrl;
+        self.styleUrl = styleUrl;
     }
     return self;
 }
@@ -83,6 +95,16 @@
     self.hairDetailView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
 }
 
+- (void)setHairUrl:(NSString *)hairUrl
+{
+    _hairUrl = hairUrl;
+    [self.hairDetailView setImageFromURL:[NSURL URLWithString:hairUrl] placeHolderImage:nil];
+//    self.hairDetailView.frame = CGRectMake(0, 0, self.view.bounds.size.height*hairImage.size.width/hairImage.size.height, self.view.bounds.size.height);
+    self.hairDetailView.frame = self.view.bounds;
+    self.hairDetailView.contentMode = UIViewContentModeScaleAspectFit;
+    self.hairDetailView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
+}
+
 #pragma mark - method
 - (void)enterCamera
 {
@@ -106,7 +128,8 @@
         UIImage *originImage = info[UIImagePickerControllerOriginalImage];
         ExperienceVC *experience = [[ExperienceVC alloc] init];
         experience.originImage = originImage;
-        experience.styleImage = self.styleImage;
+//        experience.styleImage = self.styleImage;
+        experience.styleImageUrl = self.styleUrl;
         [self.navigationController pushViewController:experience animated:YES];
     }
 }

@@ -105,6 +105,14 @@
     }
 }
 
+- (void)setStyleImageUrl:(NSString *)styleImageUrl
+{
+    _styleImageUrl = styleImageUrl;
+    if (styleImageUrl) {
+        [self.hairView setImageFromURL:[NSURL URLWithString:styleImageUrl] placeHolderImage:nil];
+    }
+}
+
 #pragma mark - getter
 - (HairDisplayView *)hairView
 {
@@ -168,6 +176,9 @@
 //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"是否要将头像保存至照片库？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
 //    alert.tag = Detail_Alert_Save_Tag;
 //    [alert show];
+    
+    //打分机制
+    
     
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"保存至本地照片库", @"保存至云相册", nil];
     [sheet showInView:self.view];
