@@ -12,14 +12,16 @@
 #import "HairDetailViewController.h"
 #import "HairService.h"
 #import "XBPickerViewController.h"
+#import "HairStyleModel.h"
+#import "HairStyleDao.h"
 
-@interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,MJRefreshBaseViewDelegate>
+@interface ViewController ()<UITableViewDataSource,UITableViewDelegate,PhotoViewCellDelegate>
 {
     MJRefreshHeaderView *_header;
     MJRefreshFooterView *_footer;
 }
 
-@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *photoArray;
 @property (nonatomic, assign) NSInteger count;
 @property (nonatomic, strong) UIButton *selectButton;
@@ -40,48 +42,72 @@
     [self.selectButton sizeToFit];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.selectButton];
     
-    [self.view addSubview:self.collectionView];
+    [self.view addSubview:self.tableView];
     
-    //下拉刷新
-    MJRefreshHeaderView *header = [MJRefreshHeaderView header];
-    header.scrollView = self.collectionView;
-    header.delegate = self;
-
-    [header beginRefreshing];
-    _header = header;
+    [self requestTagList];
     
-    //下拉刷新
-    MJRefreshFooterView *footer = [MJRefreshFooterView footer];
-    footer.scrollView = self.collectionView;
-    footer.delegate = self;
-    _footer = footer;
-    
-    __weak typeof(self) weakSelf = self;
-    [HairService getTagListsuccessBlock:^(NSDictionary *dictRet) {
-        [[NSUserDefaults standardUserDefaults] setObject:[dictRet objectForKey:@"data"] forKey:@"data"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        weakSelf.tags = [[dictRet objectForKey:@"data"] objectForKey:@"list"];
-    } failureBlock:^(NSError *error) {
-        
-    }];
-    
-    [HairService getHairListWithLastUpdateTime:@"0" successBlock:^(NSDictionary *dictRet) {
-        weakSelf.photoArray = [[dictRet objectForKey:@"data"] objectForKey:@"list"];
-        [weakSelf.collectionView reloadData];
-    } failureBlock:^(NSError *error) {
-        
-    }];
-}
-
-- (void)dealloc
-{
-    [_header free];
-    [_footer free];
+    [self requestStyleList];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - private
+- (void)requestTagList
+{
+    __weak typeof(self) weakSelf = self;
+    [HairService getTagListsuccessBlock:^(NSDictionary *dictRet) {
+        if (![[[dictRet objectForKey:@"data"] objectForKey:@"utime"] isEqualToString:@"0"])
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:[[dictRet objectForKey:@"data"] objectForKey:@"utime"] forKey:STRUCT_REFRESH_TIME];
+            [[NSUserDefaults standardUserDefaults] setObject:[[dictRet objectForKey:@"data"] objectForKey:@"list"] forKey:STRUCT_DATA];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        
+        weakSelf.tags = [[NSUserDefaults standardUserDefaults] objectForKey:STRUCT_DATA];
+    } failureBlock:^(NSError *error) {
+        
+    }];
+}
+
+- (void)requestStyleList
+{
+    __weak typeof(self) weakSelf = self;
+    
+    NSString *lastUpdateTime = [[NSUserDefaults standardUserDefaults] objectForKey:STYLE_REFRESH_TIME];
+    if (!lastUpdateTime)
+    {
+        lastUpdateTime = @"0";
+    }
+    
+    [HairService getHairListWithLastUpdateTime:lastUpdateTime successBlock:^(NSDictionary *dictRet) {
+        
+        if (![[[dictRet objectForKey:@"data"] objectForKey:@"utime"] isEqualToString:lastUpdateTime])
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:[[dictRet objectForKey:@"data"] objectForKey:@"utime"] forKey:STYLE_REFRESH_TIME];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            [HairStyleDao clearAllHairStyles];
+
+            NSArray *array = [[dictRet objectForKey:@"data"] objectForKey:@"list"];
+            static int count = 0;
+            for (NSDictionary *dict in array) {
+                if ([[dict objectForKey:@"del"] integerValue] == 0) {
+                    HairStyleModel *model = [[HairStyleModel alloc] initWithDict:dict];
+                    [model save];
+                    [weakSelf.photoArray addObject:model];
+                    count++;
+                }
+            }
+        }else{
+            weakSelf.photoArray = [HairStyleDao getAllHairStyles];
+        }
+        [weakSelf.tableView reloadData];
+    } failureBlock:^(NSError *error) {
+        
+    }];
 }
 
 - (void)showPickerView:(UIButton *)sender
@@ -94,119 +120,87 @@
     [_pickerController showInViewController:self];
 }
 
-- (void)doneWithView:(MJRefreshBaseView *)refreshView
-{
-    // 刷新表格
-    [self.collectionView reloadData];
-    
-    // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
-    [refreshView endRefreshing];
-}
-
-#pragma mark - 刷新控件的代理方法
-#pragma mark 开始进入刷新状态
-- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
-{
-    NSLog(@"%@----开始进入刷新状态", refreshView.class);
-    
-    _count = _count+12;
-    // 2.2秒后刷新表格UI
-    [self performSelector:@selector(doneWithView:) withObject:refreshView afterDelay:2.0];
-}
-
-#pragma mark 刷新完毕
-- (void)refreshViewEndRefreshing:(MJRefreshBaseView *)refreshView
-{
-    NSLog(@"%@----刷新完毕", refreshView.class);
-}
-
-#pragma mark 监听刷新状态的改变
-- (void)refreshView:(MJRefreshBaseView *)refreshView stateChange:(MJRefreshState)state
-{
-    switch (state) {
-        case MJRefreshStateNormal:
-            NSLog(@"%@----切换到：普通状态", refreshView.class);
-            break;
-            
-        case MJRefreshStatePulling:
-            NSLog(@"%@----切换到：松开即可刷新的状态", refreshView.class);
-            break;
-            
-        case MJRefreshStateRefreshing:
-            NSLog(@"%@----切换到：正在刷新状态", refreshView.class);
-            break;
-        default:
-            break;
-    }
-}
-
 #pragma mark -- Getter
-- (UICollectionView *)collectionView
+
+- (UITableView *)tableView
 {
-    if (!_collectionView) {
-        UICollectionViewFlowLayout *layout= [[UICollectionViewFlowLayout alloc]init];
-        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height) collectionViewLayout:layout];
-        [self.collectionView registerClass:[PhotoViewCell class]
-                forCellWithReuseIdentifier:@"Cell"];
-        self.collectionView.backgroundColor = [UIColor whiteColor];
-        self.collectionView.delegate = self;
-        self.collectionView.dataSource = self;
+    CGRect tableViewFrame = self.view.bounds;
+    
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:tableViewFrame style:UITableViewStylePlain];
+        _tableView.showsVerticalScrollIndicator = YES;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        
+        UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 10)];
+        _tableView.tableFooterView = footView;
     }
-    return _collectionView;
+    return _tableView;
 }
 
 - (NSMutableArray *)photoArray
 {
     if (!_photoArray) {
         _photoArray = [NSMutableArray array];
-//        for (NSInteger i=1; i<15; i++) {
-//            NSString *imageName = [NSString stringWithFormat:@"hair%ld",(long)i];
-//            [_photoArray addObject:imageName];
-//        }
     }
     return _photoArray;
 }
 
-#pragma mark -- UICollectionViewDataSource
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    
+#pragma mark - UITableView DataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return self.photoArray.count;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return ceil(self.photoArray.count/3.0f);
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identify = @"Cell";
-    PhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identify forIndexPath:indexPath];
-//    cell.photoImg.image = [UIImage imageNamed:[self.photoArray objectAtIndex:indexPath.row]];
-    [cell.photoImg setImageFromURL:[NSURL URLWithString:[[self.photoArray objectAtIndex:indexPath.section*3+indexPath.row] objectForKey:@"mtfile"]] placeHolderImage:nil];
-    NSLog(@"%@",[[self.photoArray objectAtIndex:indexPath.section*3+indexPath.row] objectForKey:@"mtfile"]);
+    static NSString *reuseIdetify = @"PhotoViewCell";
+    
+    PhotoViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdetify];
+    if (!cell) {
+        cell = [[PhotoViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdetify];
+    }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    NSIndexSet *indexSet = nil;
+    if ((indexPath.row + 1) * 3 < self.photoArray.count) {
+        indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(3*indexPath.row, 3)];
+    }else{
+        indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(3*indexPath.row, self.photoArray.count - 3*indexPath.row)];
+    }
+    
+    NSArray *array = [self.photoArray objectsAtIndexes:indexSet];
+    cell.delegate = self;
+    cell.object = array;
+    cell.indexPath = indexPath;
+    
     return cell;
 }
 
-#pragma mark --UICollectionViewDelegateFlowLayout
--(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+#pragma mark - UITableView Delegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 800*(self.view.width - 40)/3/480 + 10;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+}
+
+#pragma mark - PhotoViewCellDelegate
+- (void)didSelectedPhotoViewCellIndex:(NSInteger)index indexPath:(NSIndexPath *)indexPath
 {
-    UIEdgeInsets top = {10,10,10,10};
-    return top;
-}
-
--(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    return CGSizeMake((self.view.width - 40)/3,800*(self.view.width - 40)/3/480);
-}
-
-#pragma mark --UICollectionViewDelegate
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *hairImageUrl = [[self.photoArray objectAtIndex:indexPath.row] objectForKey:@"mtfile"];
-    NSString *styleImageUrl = [[self.photoArray objectAtIndex:indexPath.row] objectForKey:@"mtfile"];
+    HairStyleModel *model = [self.photoArray objectAtIndex:3*indexPath.row + index];
+    NSString *hairImageUrl = model.mtFilePath;
+    NSString *styleImageUrl = model.filePath;
     HairDetailViewController *detail = [[HairDetailViewController alloc] initWithDetailUrl:hairImageUrl andStyleUrl:styleImageUrl];
     [self.navigationController pushViewController:detail animated:YES];
 }
-
 
 @end

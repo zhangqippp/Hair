@@ -142,9 +142,7 @@
         _QRCodeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
         _QRCodeView.backgroundColor = [UIColor whiteColor];
         
-        _QRCodeImg = [[UIImageView alloc] init];
-        _QRCodeImg.center = _QRCodeView.center;
-        _QRCodeImg.size = CGSizeMake(self.view.width/2, self.view.width/2);
+        _QRCodeImg = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.width/4, (self.view.height-self.view.width/2)/2, self.view.width/2, self.view.width/2)];
         [_QRCodeView addSubview:_QRCodeImg];
         
         UIButton *hideButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -152,7 +150,7 @@
         hideButton.center = CGPointMake(_QRCodeView.centerX, _QRCodeImg.bottom+50);
         hideButton.backgroundColor = [UIColor whiteColor];
         hideButton.layer.cornerRadius = 5;
-        [hideButton setTitle:@"分享" forState:UIControlStateNormal];
+        [hideButton setTitle:@"确定" forState:UIControlStateNormal];
         [hideButton addTarget:self action:@selector(shareHair:) forControlEvents:UIControlEventTouchUpInside];
         [_QRCodeView addSubview:hideButton];
     }
@@ -191,7 +189,7 @@
 - (void)shareHair:(UIButton *)sender
 {
     self.QRCodeView.hidden = YES;
-    [YQMessageHelper showMessage:@"正在开发中"];
+//    [YQMessageHelper showMessage:@"正在开发中"];
 }
 
 #pragma mark - UIImagePickerControllerDelegate

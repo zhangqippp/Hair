@@ -73,6 +73,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //应用打开次数
 #define appOpenCount @"appOpenCount"
 
+#define STRUCT_REFRESH_TIME @"STRUCT_REFRESH_TIME"
+#define STRUCT_DATA         @"STRUCT_DATA"
+
+#define STYLE_REFRESH_TIME  @"STYLE_REFRESH_TIME"
+#define STYLE_DATA          @"STYLE_DATA"
+
 @interface YQGlobalHelper : NSObject
 
 // 判断是否为手机号

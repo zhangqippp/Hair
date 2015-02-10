@@ -15,7 +15,15 @@
 {
     NSString *urlPath = @"/struct/index";
     
-    return [[BaseNetworkEngine sharedInstance] sendRequestUrlPath:urlPath dictParams:nil successBlock:^(NSDictionary *dictRet) {
+    NSString *lastUpdateTime = [[NSUserDefaults standardUserDefaults] objectForKey:STRUCT_REFRESH_TIME];
+    if (!lastUpdateTime) {
+        lastUpdateTime = @"0";
+    }
+    
+    NSMutableDictionary *muDict = [NSMutableDictionary dictionary];
+    [muDict setObject:lastUpdateTime forKey:@"utime"];
+    
+    return [[BaseNetworkEngine sharedInstance] sendRequestUrlPath:urlPath dictParams:muDict successBlock:^(NSDictionary *dictRet) {
         successBlock(dictRet);
     } failureBlock:^(NSError *error) {
         failureBlock(error);

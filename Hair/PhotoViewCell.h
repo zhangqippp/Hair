@@ -7,9 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseTableViewCell.h"
 
-@interface PhotoViewCell : UICollectionViewCell
+@protocol PhotoViewCellDelegate;
 
-@property (nonatomic, strong) UIImageView *photoImg;
+@interface PhotoViewCell : BaseTableViewCell
+
+@property (nonatomic, weak) id<PhotoViewCellDelegate> delegate;
+
+@end
+
+@protocol PhotoViewCellDelegate <NSObject>
+
+- (void)didSelectedPhotoViewCellIndex:(NSInteger)index indexPath:(NSIndexPath *)indexPath;
 
 @end
