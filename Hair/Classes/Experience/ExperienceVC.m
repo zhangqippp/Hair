@@ -86,6 +86,7 @@
 - (void)dealloc
 {
     [self.photoView removeObserver:self forKeyPath:@"image" context:nil];
+    [self.hairView removeObserver:self forKeyPath:@"center" context:nil];
 }
 
 /*
