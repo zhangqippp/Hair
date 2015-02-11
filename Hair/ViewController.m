@@ -92,18 +92,19 @@
             [HairStyleDao clearAllHairStyles];
 
             NSArray *array = [[dictRet objectForKey:@"data"] objectForKey:@"list"];
-            static int count = 0;
+
             for (NSDictionary *dict in array) {
                 if ([[dict objectForKey:@"del"] integerValue] == 0) {
                     HairStyleModel *model = [[HairStyleModel alloc] initWithDict:dict];
                     [model save];
-                    [weakSelf.photoArray addObject:model];
-                    count++;
+//                    [weakSelf.photoArray addObject:model];
+//                    count++;
                 }
             }
-        }else{
-            weakSelf.photoArray = [HairStyleDao getAllHairStyles];
         }
+        
+        weakSelf.photoArray = [HairStyleDao getDuplicateHairStyles];
+
         [weakSelf.tableView reloadData];
     } failureBlock:^(NSError *error) {
         

@@ -13,6 +13,8 @@
 
 + (NSMutableArray *)getAllHairStyles;
 
++ (NSMutableArray *)getDuplicateHairStyles;
+
 + (void)clearAllHairStyles;
 
 

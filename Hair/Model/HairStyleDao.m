@@ -15,6 +15,13 @@
     return [[HairStyleModel allObjects] mutableCopy];
 }
 
++ (NSMutableArray *)getDuplicateHairStyles
+{
+    NSString *stringFormat = @"GROUP BY hair_id";
+    NSArray *filters = [HairStyleModel findByCriteria:stringFormat];
+    return [filters mutableCopy];
+}
+
 + (void)clearAllHairStyles
 {
     NSMutableArray *models = [self getAllHairStyles];
