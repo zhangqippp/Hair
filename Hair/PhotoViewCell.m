@@ -14,6 +14,7 @@
 @interface PhotoView : UIView
 
 @property (nonatomic, strong) UIImageView *avatarImg;
+@property (nonatomic, strong) UILabel *tagLabel;
 
 @end
 
@@ -24,8 +25,14 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.avatarImg = [[UIImageView alloc] init];
-        _avatarImg.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+        _avatarImg.frame = CGRectMake(0, 0, frame.size.width, frame.size.height-20);
         [self addSubview:_avatarImg];
+        
+        self.tagLabel = [[UILabel alloc] init];
+        _tagLabel.frame = CGRectMake(0, frame.size.height-20, frame.size.width, 20);
+        _tagLabel.text = @"11111";
+        _tagLabel.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:_tagLabel];
     }
     return self;
 }
@@ -51,7 +58,7 @@
         
         for (NSInteger i = 0; i < 3; i++) {
             
-            PhotoView *photoView = [[PhotoView alloc] initWithFrame:CGRectMake(padding+i*(width+padding), 10, width, 800*width/480)];
+            PhotoView *photoView = [[PhotoView alloc] initWithFrame:CGRectMake(padding+i*(width+padding), 10, width, 800*width/480 + 20)];
             photoView.tag = kPhotoViewTag + i;
             photoView.hidden = YES;
             
@@ -91,6 +98,7 @@
             PhotoView *memberView = [self.photoViews objectAtIndex:i];
             memberView.hidden = NO;
             [memberView.avatarImg setImageFromURL:[NSURL URLWithString:model.mtFilePath] placeHolderImage:[UIImage imageNamed:@""]];
+            memberView.tagLabel.text = model.tagsTitle;
         }
         
         for (NSInteger i = array.count; i < 3; i++) {
@@ -108,6 +116,14 @@
         _photoViews = [[NSMutableArray alloc] init];
     }
     return _photoViews;
+}
+
+- (void)prepareForReuse
+{
+    for (PhotoView *photoView in self.photoViews) {
+        photoView.avatarImg.image = nil;
+        photoView.tagLabel.text = @"";
+    }
 }
 
 @end

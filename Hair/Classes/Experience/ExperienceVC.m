@@ -175,14 +175,21 @@
         _QRCodeImg = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.width/4, (self.view.height-self.view.width/2)/2, self.view.width/2, self.view.width/2)];
         [_QRCodeView addSubview:_QRCodeImg];
         
-        UIButton *hideButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        hideButton.size = CGSizeMake(100, 50);
-        hideButton.center = CGPointMake(_QRCodeView.centerX, _QRCodeImg.bottom+50);
-        hideButton.backgroundColor = [UIColor whiteColor];
-        hideButton.layer.cornerRadius = 5;
-        [hideButton setTitle:@"确定" forState:UIControlStateNormal];
-        [hideButton addTarget:self action:@selector(shareHair:) forControlEvents:UIControlEventTouchUpInside];
-        [_QRCodeView addSubview:hideButton];
+        UILabel *noticeLabel = [[UILabel alloc] init];
+        noticeLabel.textAlignment = NSTextAlignmentCenter;
+        noticeLabel.size = CGSizeMake(300, 50);
+        noticeLabel.center = CGPointMake(_QRCodeView.centerX, _QRCodeImg.bottom+50);
+        noticeLabel.text = @"扫描二维码，下载发型效果";
+        [_QRCodeView addSubview:noticeLabel];
+        
+        
+//        UIButton *hideButton = [UIButton buttonWithType:UIButtonTypeSystem];
+//        
+//        hideButton.backgroundColor = [UIColor whiteColor];
+//        hideButton.layer.cornerRadius = 5;
+//        [hideButton setTitle:@"确定" forState:UIControlStateNormal];
+//        [hideButton addTarget:self action:@selector(shareHair:) forControlEvents:UIControlEventTouchUpInside];
+//        [_QRCodeView addSubview:hideButton];
     }
     return _QRCodeView;
 }

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^SelectionCompleteBlock)(NSInteger selectedIndex);
+typedef void(^SelectionCompleteBlock)(NSInteger component, NSInteger row);
 
 @interface XBPickerViewController : UIViewController
 

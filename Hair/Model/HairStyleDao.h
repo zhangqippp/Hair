@@ -17,5 +17,7 @@
 
 + (void)clearAllHairStyles;
 
++ (NSMutableArray *)getFilterHairStylesWithParentId:(NSString *)parentId subId:(NSString *)subId;
+
 
 @end

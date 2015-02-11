@@ -97,8 +97,6 @@
                 if ([[dict objectForKey:@"del"] integerValue] == 0) {
                     HairStyleModel *model = [[HairStyleModel alloc] initWithDict:dict];
                     [model save];
-//                    [weakSelf.photoArray addObject:model];
-//                    count++;
                 }
             }
         }
@@ -116,6 +114,14 @@
     if (!_pickerController) {
         self.pickerController = [XBPickerViewController pickerViewController];
     }
+    
+    __weak typeof(self) weakSelf = self;
+    self.pickerController.selectionBlock = ^(NSInteger component, NSInteger row){
+        NSString *parentId = [[weakSelf.tags objectAtIndex:component] objectForKey:@"id"];
+        NSString *subId = [[[[weakSelf.tags objectAtIndex:component] objectForKey:@"data"] objectAtIndex:row] objectForKey:@"id"];
+        weakSelf.photoArray = [HairStyleDao getFilterHairStylesWithParentId:parentId subId:subId];
+        [weakSelf.tableView reloadData];
+    };
     
     _pickerController.titles = self.tags;
     [_pickerController showInViewController:self];
@@ -186,7 +192,7 @@
 #pragma mark - UITableView Delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 800*(self.view.width - 40)/3/480 + 10;
+    return 800*(self.view.width - 40)/3/480 + 10 + 20;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

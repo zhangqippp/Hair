@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *pickerToolBar;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (assign, nonatomic) NSInteger selectedIndex;
+@property (assign, nonatomic) NSInteger selectedRow;
 
 
 @end
@@ -35,22 +36,14 @@
     self.view.backgroundColor = [UIColor clearColor];
     self.backgroundView.alpha = 0.0f;
     self.pickerToolBar.alpha = 0.0f;
-    self.selectedIndex = [self.titles indexOfObject:self.selectedTitle];
-    if (self.selectedIndex == NSNotFound)
-    {
-        self.selectedIndex = 0;
-    }
+    
+    self.selectedIndex = 0;
+    self.selectedRow = 0;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if (self.selectedIndex != NSNotFound)
-    {
-        [self.pickerView selectRow:self.selectedIndex
-                       inComponent:0
-                          animated:NO];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -93,6 +86,8 @@
     if (component == 0) {
         self.selectedIndex = row;
         [pickerView reloadComponent:1];
+    }else{
+        self.selectedRow = row;
     }
 }
 
@@ -123,7 +118,8 @@
                          
                          if (ok && self.selectionBlock)
                          {
-                             self.selectionBlock(self.selectedIndex);
+                             NSLog(@"component::%ld , row::%ld",(long)self.selectedIndex,(long)self.selectedRow);
+                             self.selectionBlock(self.selectedIndex,self.selectedRow);
                          }
                          [self willMoveToParentViewController:nil];
                          [self.view removeFromSuperview];

@@ -30,4 +30,11 @@
     }
 }
 
++ (NSMutableArray *)getFilterHairStylesWithParentId:(NSString *)parentId subId:(NSString *)subId
+{
+    NSString *stringFormat = @"WHERE parent_id = '%@' AND sub_id = '%@'";
+    NSArray *filters = [HairStyleModel findByCriteria:stringFormat,parentId,subId];
+    return [filters mutableCopy];
+}
+
 @end

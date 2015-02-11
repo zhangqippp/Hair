@@ -18,9 +18,10 @@ typedef NS_ENUM(NSInteger, HandleType)
 @interface HairStyleModel : SQLitePersistentObject
 
 @property (nonatomic, strong) NSString *hairId;
-@property (nonatomic, strong) NSString *parentId;
-@property (nonatomic, strong) NSString *subId;
+@property (nonatomic, assign) NSInteger parentId;
+@property (nonatomic, assign) NSInteger subId;
 @property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *tagsTitle;
 @property (nonatomic, strong) NSString *filePath;
 @property (nonatomic, strong) NSString *mtFilePath;
 @property (nonatomic, strong) NSString *utime;
